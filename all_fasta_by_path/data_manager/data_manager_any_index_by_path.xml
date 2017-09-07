@@ -16,18 +16,21 @@
         <param name="path" type="text" value="" label="path field for the entry" />
         <param name="data_table" type="text" value="" label="data table for the index">
           <option value='all_fasta'>all_fasta</option>
-          <option value='bowtie_indexes_color'>bowtie_indexes_color</option>
-          <option value='bowtie_indexes'>bowtie_indexes</option>
           <option value='bowtie2_indexes'>bowtie2_indexes</option>
+          <option value='bowtie_indexes'>bowtie_indexes</option>
+          <option value='bowtie_indexes_color'>bowtie_indexes_color</option>
           <option value='bwa_mem_indexes'>bwa_mem_indexes</option>
           <option value='bwameth_indexes'>bwameth_indexes</option>
           <option value='fasta_indexes'>fasta_indexes</option>
-          <option value='fasta_indexes'>gatk_picard_indexes</option>
+          <option value='gatk_picard_indexes'>gatk_picard_indexes</option>
           <option value='gemini_databases'>gemini_databases</option>
           <option value='gene_transfer'>gene_transfer</option>
           <option value='hisat2_indexes'>hisat2_indexes</option>
           <option value='kallisto_indexes'>kallisto_indexes</option>
+          <option value='mosaik_indexes'>mosaik_indexes</option>
+          <option value='ngs_sim_fasta'>ngs_sim_fasta</option>
           <option value='picard_indexes'>picard_indexes</option>
+          <option value='srma_indexes'>srma_indexes</option>
           <option value='tophat2_indexes'>tophat2_indexes</option>
         </param>
     </inputs>

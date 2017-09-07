@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <data_managers>
-    <data_manager tool_file="data_manager/all_fasta_by_path_data_manager.xml" id="data_manager_any_index_by_path" version="0.0.1">
+    <data_manager tool_file="data_manager/data_manager_any_index_by_path.xml" id="data_manager_any_index_by_path" version="0.0.1">
         <data_table name="all_fasta">
             <output>
                 <column name="value" />
@@ -9,6 +9,135 @@
                 <column name="path" />
             </output>
         </data_table>
+        <data_table name="bowtie2_indexes">
+            <output>
+                <column name="value" />
+                <column name="dbkey" />
+                <column name="name" />
+                <column name="path" />
+            </output>
+        </data_table>
+        <data_table name="bowtie_indexes">
+            <output>
+                <column name="value" />
+                <column name="dbkey" />
+                <column name="name" />
+                <column name="path" />
+            </output>
+        </data_table>
+        <data_table name="bowtie_indexes_color">
+            <output>
+                <column name="value" />
+                <column name="dbkey" />
+                <column name="name" />
+                <column name="path" />
+            </output>
+        </data_table>
+        <data_table name="bwa_mem_indexes">
+            <output>
+                <column name="value" />
+                <column name="dbkey" />
+                <column name="name" />
+                <column name="path" />
+            </output>
+        </data_table>
+        <data_table name="bwameth_indexes">
+            <output>
+                <column name="value" />
+                <column name="dbkey" />
+                <column name="name" />
+                <column name="path" />
+            </output>
+        </data_table>
+        <data_table name="fasta_indexes">
+            <output>
+                <column name="value" />
+                <column name="dbkey" />
+                <column name="name" />
+                <column name="path" />
+            </output>
+        </data_table>
+        <data_table name="gatk_picard_indexes">
+            <output>
+                <column name="value" />
+                <column name="dbkey" />
+                <column name="name" />
+                <column name="path" />
+            </output>
+        </data_table>
+        <data_table name="gemini_databases">
+            <output>
+                <column name="value" />
+                <column name="dbkey" />
+                <column name="name" />
+                <column name="path" />
+            </output>
+        </data_table>
+        <data_table name="gene_transfer">
+            <output>
+                <column name="value" />
+                <column name="dbkey" />
+                <column name="name" />
+                <column name="path" />
+            </output>
+        </data_table>
+        <data_table name="hisat2_indexes">
+            <output>
+                <column name="value" />
+                <column name="dbkey" />
+                <column name="name" />
+                <column name="path" />
+            </output>
+        </data_table>
+        <data_table name="kallisto_indexes">
+            <output>
+                <column name="value" />
+                <column name="dbkey" />
+                <column name="name" />
+                <column name="path" />
+            </output>
+        </data_table>
+        <data_table name="mosaik_indexes">
+            <output>
+                <column name="value" />
+                <column name="dbkey" />
+                <column name="name" />
+                <column name="path" />
+            </output>
+        </data_table>
+        <data_table name="ngs_sim_fasta">
+            <output>
+                <column name="value" />
+                <column name="dbkey" />
+                <column name="name" />
+                <column name="path" />
+            </output>
+        </data_table>
+        <data_table name="picard_indexes">
+            <output>
+                <column name="value" />
+                <column name="dbkey" />
+                <column name="name" />
+                <column name="path" />
+            </output>
+        </data_table>
+        <data_table name="srma_indexes">
+            <output>
+                <column name="value" />
+                <column name="dbkey" />
+                <column name="name" />
+                <column name="path" />
+            </output>
+        </data_table>
+        <data_table name="tophat2_indexes">
+            <output>
+                <column name="value" />
+                <column name="dbkey" />
+                <column name="name" />
+                <column name="path" />
+            </output>
+        </data_table>
+
     </data_manager>
 
 </data_managers>
