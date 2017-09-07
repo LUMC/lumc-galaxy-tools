@@ -14,14 +14,37 @@
         <param name="dbkey" type="text" value="" label="dbkey field for the entry.  Defaults to value if left blank." />
         <param name="name" type="text" value="" label="name field for the entry. Defaults to the file name from path if left blank." />
         <param name="path" type="text" value="" label="path field for the entry" />
-        <param name="data_table" type="text" value="" label="data table for the index" />
+        <param name="data_table" type="text" value="" label="data table for the index">
+          <option value='all_fasta'>all_fasta</option>
+          <option value='bowtie_indexes_color'>bowtie_indexes_color</option>
+          <option value='bowtie_indexes'>bowtie_indexes</option>
+          <option value='bowtie2_indexes'>bowtie2_indexes</option>
+          <option value='bwa_mem_indexes'>bwa_mem_indexes</option>
+          <option value='bwameth_indexes'>bwameth_indexes</option>
+          <option value='fasta_indexes'>fasta_indexes</option>
+          <option value='fasta_indexes'>gatk_picard_indexes</option>
+          <option value='gemini_databases'>gemini_databases</option>
+          <option value='gene_transfer'>gene_transfer</option>
+          <option value='hisat2_indexes'>hisat2_indexes</option>
+          <option value='humann2_nucleotide_database'>humann2_nucleotide_database</option>
+          <option value='humann2_protein_database'>humann2_protein_database</option>
+          <option value='hisat2_indexes'>hisat2_indexes</option>
+          <option value='kallisto_indexes'>kallisto_indexes</option>
+          <option value='metaphlan2_database'>metaphlan2_database</option>
+          <option value='picard_indexes'>picard_indexes</option>
+          <option value='qiime_rep_set'>qiime_rep_set</option>
+          <option value='qiime_rep_set_aligned'>qiime_rep_set_aligned</option>
+          <option value='qiime_taxonomy'>qiime_taxonomy</option>
+          <option value='qiime_trees'>qiime_trees</option>
+          <option value='tophat2_indexes'>tophat2_indexes</option>
+        </param>
     </inputs>
     <outputs>
         <data name="json_output_file" format="data_manager_json"/>
     </outputs>
 
     <help>
-Adds a server path to the all_fasta data table.
+Adds a server path to the selected data table.
 
 The tool will check the path exists but NOT check that it holds the expected data type.
 
