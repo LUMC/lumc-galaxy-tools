@@ -26,16 +26,8 @@
           <option value='gemini_databases'>gemini_databases</option>
           <option value='gene_transfer'>gene_transfer</option>
           <option value='hisat2_indexes'>hisat2_indexes</option>
-          <option value='humann2_nucleotide_database'>humann2_nucleotide_database</option>
-          <option value='humann2_protein_database'>humann2_protein_database</option>
-          <option value='hisat2_indexes'>hisat2_indexes</option>
           <option value='kallisto_indexes'>kallisto_indexes</option>
-          <option value='metaphlan2_database'>metaphlan2_database</option>
           <option value='picard_indexes'>picard_indexes</option>
-          <option value='qiime_rep_set'>qiime_rep_set</option>
-          <option value='qiime_rep_set_aligned'>qiime_rep_set_aligned</option>
-          <option value='qiime_taxonomy'>qiime_taxonomy</option>
-          <option value='qiime_trees'>qiime_trees</option>
           <option value='tophat2_indexes'>tophat2_indexes</option>
         </param>
     </inputs>
