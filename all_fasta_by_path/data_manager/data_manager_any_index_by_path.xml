@@ -1,12 +1,12 @@
-<tool id="all_fasta_by_path_manager" name="all_fasta by path data manager" tool_type="manage_data" version="0.0.1">
+<tool id="data_manager_any_index_by_path" name="Any index by path manager" tool_type="manage_data" version="0.0.1">
     <description>path inputer</description>
     <command interpreter="python">
-        path_name_value_key_manager.py 
-        --value "${value}" 
-        --dbkey "${dbkey}" 
-        --name "${name}" 
-        --path "${path}" 
-        --data_table_name "all_fasta" 
+        path_name_value_key_manager.py
+        --value "${value}"
+        --dbkey "${dbkey}"
+        --name "${name}"
+        --path "${path}"
+        --data_table_name "${data_table}"
         --json_output_file "${json_output_file}"
     </command>
     <inputs>
@@ -14,6 +14,7 @@
         <param name="dbkey" type="text" value="" label="dbkey field for the entry.  Defaults to value if left blank." />
         <param name="name" type="text" value="" label="name field for the entry. Defaults to the file name from path if left blank." />
         <param name="path" type="text" value="" label="path field for the entry" />
+        <param name="data_table" type="text" value="" label="data table for the index" />
     </inputs>
     <outputs>
         <data name="json_output_file" format="data_manager_json"/>
