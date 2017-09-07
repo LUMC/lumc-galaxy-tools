@@ -1,0 +1,37 @@
+<tool id="all_fasta_by_path_manager" name="all_fasta by path data manager" tool_type="manage_data" version="0.0.1">
+    <description>path inputer</description>
+    <command interpreter="python">
+        path_name_value_key_manager.py 
+        --value "${value}" 
+        --dbkey "${dbkey}" 
+        --name "${name}" 
+        --path "${path}" 
+        --data_table_name "all_fasta" 
+        --json_output_file "${json_output_file}"
+    </command>
+    <inputs>
+        <param name="value" type="text" value="" label="value field for the entry.  Defaults to name if left blank." />
+        <param name="dbkey" type="text" value="" label="dbkey field for the entry.  Defaults to value if left blank." />
+        <param name="name" type="text" value="" label="name field for the entry. Defaults to the file name from path if left blank." />
+        <param name="path" type="text" value="" label="path field for the entry" />
+    </inputs>
+    <outputs>
+        <data name="json_output_file" format="data_manager_json"/>
+    </outputs>
+
+    <help>
+Adds a server path to the all_fasta data table.
+
+The tool will check the path exists but NOT check that it holds the expected data type.
+
+If name is not provided the filename from path less the extension is used.
+
+If value is not provided, the name will be used (or its default)
+
+If dbkey is not provided, the value will be used (or its default)
+
+    </help>
+    <citations>
+    </citations>
+
+</tool>
