@@ -47,13 +47,13 @@ def main():
     parser.add_argument( '--path', action='store', type=str, default=None, help='path' )
     parser.add_argument( '--data_table_name', action='store', type=str, default=None, help='path' )
     parser.add_argument( '--json_output_file', action='store', type=str, default=None, help='path' )
-    parser.add_argument( '--prefix', action='store_true', help='Does not check the path but checks the prefix. Useful for bowtie and other prefix indices.')
+    parser.add_argument( '--no_prefix', action='store_true', help='Does not check the prefix but checks the path. Useful for indexes that reference a single file.')
     options = parser.parse_args()
 
     path = check_param("path", options.path)
 
     # Check if file or prefix exists
-    if options.prefix:
+    if not options.no_prefix:
         dirname = os.path.dirname(path)
         prefix = os.path.basename(path)
         if not prefix_exists(dirname,prefix):
