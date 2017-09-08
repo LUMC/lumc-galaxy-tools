@@ -1,0 +1,10 @@
+categories: [Data Managers]
+description: A data manager to register already build indexes in Galaxy's data tables
+remote_repository_url: https://github.com/LUMC/lumc-galaxy-tools/tree/master/data_manager_select_index_by_path
+long_description: Forked from the all_fasta_by_path_manager this tool aims to provide the same functionality for all indexes that have a data table that follows the value,dbkey,name,path layout.
+name: data_manager_select_index_by_path
+owner: rhpvorderman
+type: unrestricted
+exclude:
+  - test-data/
+  - README.md

@@ -1,1 +1,3 @@
 .hg/
+.venv
+data_manager_select_index_by_path/tool_test_output*
