@@ -2,7 +2,7 @@
 
 import json
 import argparse
-import os.path
+import os
 
 def _add_data_table_entry( data_manager_dict, data_table_name, data_table_entry ):
     data_manager_dict['data_tables'] = data_manager_dict.get( 'data_tables', {} )
@@ -22,6 +22,15 @@ def check_param(name, value, default=None,  check_tab=True):
         raise Exception( '{0} is not a valid {1}. It may not contain a tab because these are used as seperators by galaxy .'.format( value, name ) )
     return value
 
+def prefix_exists(directory, prefix):
+    '''checks if files exist with prefix in a directory. Returns Boolean'''
+    matched_files = []
+    directory_files = os.listdir(directory)
+    for directory_file in directory_files:
+        if directory_file.startswith(prefix):
+            matched_files.append(directory_file)
+    # Empty list should return False
+    return bool(matched_files)
 
 def main():
 
@@ -38,16 +47,21 @@ def main():
     parser.add_argument( '--path', action='store', type=str, default=None, help='path' )
     parser.add_argument( '--data_table_name', action='store', type=str, default=None, help='path' )
     parser.add_argument( '--json_output_file', action='store', type=str, default=None, help='path' )
-    parser.add_argument( '--no_check_path', action='store_true', help='If provided. Only checks whether directory exists, but not if file in directory exists. (Useful for bowtie and other prefix indices.)')
+    parser.add_argument( '--prefix', action='store_true', help='Does not check the path but checks the prefix. Useful for bowtie and other prefix indices.')
     options = parser.parse_args()
 
     path = check_param("path", options.path)
-    dirname = os.path.dirname(path)
-    if not os.path.exists(dirname):
-        raise Exception( 'Directory "{0}" does not exist, or no read permission'.format(dirname))
+
+    # Check if file or prefix exists
+    if options.prefix:
+        dirname = os.path.dirname(path)
+        prefix = os.path.basename(path)
+        if not prefix_exists(dirname,prefix):
+            raise Exception( 'Unable to find files with prefix "{0}" in {1}.'.format( prefix, dirname ) )
     else:
-        if (not options.no_check_path) and (not os.path.exists(path)):
+        if not os.path.exists(path):
             raise Exception( 'Unable to find path {0}.'.format( path ) )
+
     basename = os.path.basename(path)
     filename = os.path.splitext(basename)[0]
     name = check_param("name", options.name, default=filename)
