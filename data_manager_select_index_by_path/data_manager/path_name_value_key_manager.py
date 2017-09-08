@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import json
-import optparse
+import argparse
 import os.path
 
 def _add_data_table_entry( data_manager_dict, data_table_name, data_table_entry ):
@@ -31,13 +31,13 @@ def main():
     #print '{0} is not a valid {1}. It may not contain a tab.'.format( value, name )
 
     #Parse Command Line
-    parser = optparse.OptionParser()
-    parser.add_option( '--value', action='store', type="string", default=None, help='value' )
-    parser.add_option( '--dbkey', action='store', type="string", default=None, help='dbkey' )
-    parser.add_option( '--name',  action='store', type="string", default=None, help='name' )
-    parser.add_option( '--path', action='store', type="string", default=None, help='path' )
-    parser.add_option( '--data_table_name', action='store', type="string", default=None, help='path' )
-    parser.add_option( '--json_output_file', action='store', type="string", default=None, help='path' )
+    parser = argparse.ArgumentParser()
+    parser.add_argument( '--value', action='store', type=str, default=None, help='value' )
+    parser.add_argument( '--dbkey', action='store', type=str, default=None, help='dbkey' )
+    parser.add_argument( '--name',  action='store', type=str, default=None, help='name' )
+    parser.add_argument( '--path', action='store', type=str, default=None, help='path' )
+    parser.add_argument( '--data_table_name', action='store', type=str, default=None, help='path' )
+    parser.add_argument( '--json_output_file', action='store', type=str, default=None, help='path' )
     (options, args) = parser.parse_args()
  
     path = check_param("path", options.path)
