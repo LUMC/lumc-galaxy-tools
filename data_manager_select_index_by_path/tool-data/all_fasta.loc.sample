@@ -1,6 +1,8 @@
 #This file lists the locations and dbkeys of all the fasta files
-
-#This file has the format (white space characters are TAB characters):
+#under the "genome" directory (a directory that contains a directory
+#for each build). The script extract_fasta.py will generate the file
+#all_fasta.loc. This file has the format (white space characters are
+#TAB characters):
 #
 #<unique_build_id>	<dbkey>		<display_name>	<file_path>
 #
@@ -14,4 +16,3 @@
 #fasta file. So there will be multiple fasta files for each build,
 #such as with hg19 above.
 #
-

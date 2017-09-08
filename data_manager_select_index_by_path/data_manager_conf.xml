@@ -8,7 +8,6 @@
                 <column name="name" />
                 <column name="path" />
             </output>
-<!--
         </data_table>
         <data_table name="bowtie2_indexes">
             <output>
@@ -98,31 +97,7 @@
                 <column name="path" />
             </output>
         </data_table>
-        <data_table name="mosaik_indexes">
-            <output>
-                <column name="value" />
-                <column name="dbkey" />
-                <column name="name" />
-                <column name="path" />
-            </output>
-        </data_table>
-        <data_table name="ngs_sim_fasta">
-            <output>
-                <column name="value" />
-                <column name="dbkey" />
-                <column name="name" />
-                <column name="path" />
-            </output>
-        </data_table>
         <data_table name="picard_indexes">
-            <output>
-                <column name="value" />
-                <column name="dbkey" />
-                <column name="name" />
-                <column name="path" />
-            </output>
-        </data_table>
-        <data_table name="srma_indexes">
             <output>
                 <column name="value" />
                 <column name="dbkey" />
@@ -138,7 +113,6 @@
                 <column name="path" />
             </output>
         </data_table>
--->
     </data_manager>
 
 </data_managers>

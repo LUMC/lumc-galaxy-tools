@@ -1,25 +1,59 @@
 <!-- Use the file tool_data_table_conf.xml.oldlocstyle if you don't want to update your loc files as changed in revision 4550:535d276c92bc-->
 <tables>
-    <table name="all_fasta" comment_char="#">
+    <table name="all_fasta" comment_char="#" allow_duplicate_entries="False">
         <columns>value, dbkey, name, path</columns>
         <file path="tool-data/all_fasta.loc" />
     </table>
-<!--
-    <table name="bowtie2_indexes" comment_char="#">
+    <table name="bowtie2_indexes" comment_char="#" allow_duplicate_entries="False">
         <columns>value, dbkey, name, path</columns>
         <file path="tool-data/bowtie2_indices.loc" />
     </table>
-    <table name="bowtie_indexes" comment_char="#">
+    <table name="bowtie_indexes" comment_char="#" allow_duplicate_entries="False">
         <columns>value, dbkey, name, path</columns>
         <file path="tool-data/bowtie_indices.loc" />
     </table>
-    <table name="bowtie_indexes_color" comment_char="#">
+    <table name="bowtie_indexes_color" comment_char="#" allow_duplicate_entries="False">
         <columns>value, dbkey, name, path</columns>
         <file path="tool-data/bowtie_indices_color.loc" />
     </table>
-    <table name="bwa_mem_indexes" comment_char="#">
+    <table name="bwa_mem_indexes" comment_char="#" allow_duplicate_entries="False">
         <columns>value, dbkey, name, path</columns>
         <file path="tool-data/bwa_mem_index.loc" />
     </table>
--->
+    <table name="bwameth_indexes" comment_char="#" allow_duplicate_entries="False">
+        <columns>value, dbkey, name, path</columns>
+        <file path="tool-data/bwameth_indexes.loc" />
+    </table>
+    <table name="fasta_indexes" comment_char="#" allow_duplicate_entries="False">
+        <columns>value, dbkey, name, path</columns>
+        <file path="tool-data/fasta_indexes.loc" />
+    </table>
+    <table name="gatk_picard_indexes" comment_char="#" allow_duplicate_entries="False">
+        <columns>value, dbkey, name, path</columns>
+        <file path="tool-data/gatk_sorted_picard_index.loc" />
+    </table>
+    <table name="gemini_databases" comment_char="#" allow_duplicate_entries="False">
+        <columns>value, dbkey, name, path</columns>
+        <file path="tool-data/gemini_databases.loc" />
+    </table>
+    <table name="gene_transfer" comment_char="#">
+        <columns>value, dbkey, name, path</columns>
+        <file path="tool-data/gene_transfer.loc" />
+    </table>
+    <table name="hisat2_indexes" comment_char="#" allow_duplicate_entries="False">
+        <columns>value, dbkey, name, path</columns>
+        <file path="tool-data/hisat2_indexes.loc" />
+    </table>
+    <table name="kallisto_indexes" comment_char="#" allow_duplicate_entries="False">
+        <columns>value, dbkey, name, path</columns>
+        <file path="tool-data/kallisto_indexes.loc" />
+    </table>
+    <table name="picard_indexes" comment_char="#">
+        <columns>value, dbkey, name, path</columns>
+        <file path="tool-data/picard_index.loc" />
+    </table>
+    <table name="tophat2_indexes" comment_char="#">
+        <columns>value, dbkey, name, path</columns>
+        <file path="tool-data/tophat2_indices.loc" />
+    </table>
  </tables>
