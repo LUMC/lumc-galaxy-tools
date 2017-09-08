@@ -8,6 +8,7 @@
                 <column name="name" />
                 <column name="path" />
             </output>
+<!--
         </data_table>
         <data_table name="bowtie2_indexes">
             <output>
@@ -137,7 +138,7 @@
                 <column name="path" />
             </output>
         </data_table>
-
+-->
     </data_manager>
 
 </data_managers>
