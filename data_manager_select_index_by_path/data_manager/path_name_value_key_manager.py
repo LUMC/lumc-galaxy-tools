@@ -38,7 +38,7 @@ def main():
     parser.add_argument( '--path', action='store', type=str, default=None, help='path' )
     parser.add_argument( '--data_table_name', action='store', type=str, default=None, help='path' )
     parser.add_argument( '--json_output_file', action='store', type=str, default=None, help='path' )
-    (options, args) = parser.parse_args()
+    options = parser.parse_args()
  
     path = check_param("path", options.path)
     if not os.path.exists(path):
