@@ -38,11 +38,16 @@ def main():
     parser.add_argument( '--path', action='store', type=str, default=None, help='path' )
     parser.add_argument( '--data_table_name', action='store', type=str, default=None, help='path' )
     parser.add_argument( '--json_output_file', action='store', type=str, default=None, help='path' )
+    parser.add_argument( '--no_check_path', action='store_true', help='If provided. Only checks whether directory exists, but not if file in directory exists. (Useful for bowtie and other prefix indices.)')
     options = parser.parse_args()
- 
+
     path = check_param("path", options.path)
-    if not os.path.exists(path):
-        raise Exception( 'Unable to find path {0}.'.format( path ) )
+    dirname = os.path.dirname(path)
+    if not os.path.exists(dirname):
+        raise Exception( 'Directory "{0}" does not exist, or no read permission'.format(dirname))
+    else:
+        if (not options.no_check_path) and (not os.path.exists(path)):
+            raise Exception( 'Unable to find path {0}.'.format( path ) )
     basename = os.path.basename(path)
     filename = os.path.splitext(basename)[0]
     name = check_param("name", options.name, default=filename)
@@ -66,5 +71,5 @@ def main():
         output_file.write( json.dumps( data_manager_dict ) )
         output_file.write( "\n" )
 
-if __name__ == "__main__": 
+if __name__ == "__main__":
     main()
