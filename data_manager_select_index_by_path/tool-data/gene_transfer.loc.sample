@@ -1,0 +1,14 @@
+#This file lists the locations and dbkeys of all the gene transfer files
+
+#This file has the format (white space characters are TAB characters):
+#
+#<unique_build_id>	<dbkey>		<display_name>	<file_path>
+#
+#So, gene_transfer.loc could look something like this:
+#
+#vm5	vm5	vM5 annotation	/path/to/vM5.annotation.gtf
+#
+#Your gene_transfer.loc file should contain an entry for each individual
+#gtf file. 
+#
+
