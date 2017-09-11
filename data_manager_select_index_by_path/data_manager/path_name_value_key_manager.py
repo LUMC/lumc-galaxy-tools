@@ -3,6 +3,7 @@
 import json
 import argparse
 import os
+import yaml
 
 def _add_data_table_entry( data_manager_dict, data_table_name, data_table_entry ):
     data_manager_dict['data_tables'] = data_manager_dict.get( 'data_tables', {} )
@@ -32,6 +33,16 @@ def prefix_exists(directory, prefix):
     # Empty list should return False
     return bool(matched_files)
 
+def prefix_plus_extension_exists(directory, prefix, extension):
+    '''checks if files exist with prefix in a directory. Returns Boolean'''
+    matched_files = []
+    directory_files = os.listdir(directory)
+    for directory_file in directory_files:
+        if directory_file.startswith(prefix) and directory_file.endswith(extension):
+            matched_files.append(directory_file)
+    # Empty list should return False
+    return bool(matched_files)
+
 def main():
 
     #value = "test_value"
@@ -47,21 +58,9 @@ def main():
     parser.add_argument( '--path', action='store', type=str, default=None, help='path' )
     parser.add_argument( '--data_table_name', action='store', type=str, default=None, help='path' )
     parser.add_argument( '--json_output_file', action='store', type=str, default=None, help='path' )
-    parser.add_argument( '--no_prefix', action='store_true', help='Does not check the prefix but checks the path. Useful for indexes that reference a single file.')
     options = parser.parse_args()
 
     path = check_param("path", options.path)
-
-    # Check if file or prefix exists
-    if not options.no_prefix:
-        dirname = os.path.dirname(path)
-        prefix = os.path.basename(path)
-        if not prefix_exists(dirname,prefix):
-            raise Exception( 'Unable to find files with prefix "{0}" in {1}.'.format( prefix, dirname ) )
-    else:
-        if not os.path.exists(path):
-            raise Exception( 'Unable to find path {0}.'.format( path ) )
-
     basename = os.path.basename(path)
     filename = os.path.splitext(basename)[0]
     name = check_param("name", options.name, default=filename)
@@ -69,6 +68,22 @@ def main():
     dbkey = check_param("dbkey", options.dbkey, default=value)
     data_table_name = check_param("data_table_name", options.data_table_name)
     json_output_file = check_param("json_output_file", options.json_output_file, check_tab=False)
+
+    # Check if file or prefix exists
+    indexes = yaml.load(file(os.path.join(os.path.dirname(__file__), 'indexes.yml')))
+    index_dict = indexes.get(data_table_name,{})
+    index_name = index_dict.get('name','index')
+    index_extensions = index_dict.get('extensions', [''])
+    no_prefix = index_dict.get('no_prefix', False)
+    if not no_prefix:
+        dirname = os.path.dirname(path)
+        prefix = basename
+        for extension in index_extensions:
+            if not prefix_plus_extension_exists(dirname,prefix,extension):
+                raise Exception( 'Unable to find files with prefix "{0}" and extension "{1}" in {2}. Is this a valid {3}?'.format( prefix, extension, dirname, index_name ) )
+    else:
+        if not os.path.exists(path):
+            raise Exception( 'Unable to find path {0}.'.format( path ) )
 
     if os.path.exists(json_output_file):
         params = json.loads( open( json_output_file ).read() )

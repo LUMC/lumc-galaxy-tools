@@ -1,0 +1,50 @@
+all_fasta:
+  name: fasta file
+  extensions:
+    - .fa
+  no_prefix: True
+bowtie2_indexes:
+  name: bowtie2 index
+  extensions:
+    - .bt2
+bowtie_indexes:
+  name: bowtie index
+  extensions:
+    - .ebwt
+bowtie_indexes_color:
+  name: bowtie color index
+  extensions:
+    - .ebwt
+bwa_mem_indexes:
+  name: bwa mem index
+  extensions:
+    - .amb
+    - .ann
+    - .bwt
+    - .pac
+    - .sa
+bwameth_indexes:
+  name: bwa_meth_index
+fasta_indexes:
+  name: fasta index
+  extensions:
+    - .fai
+gatk_picard_index:
+  name: picard index for GATK
+gene_transfer:
+  name: Gene Transfer File
+  extensions:
+    - .gtf
+hisat2_indexes:
+  name: hisat2 index
+  extensions:
+    - .ht2
+kallisto_indexes:
+  name: kallisto index
+  no_prefix: True
+picard_indexes:
+  name: picard index
+tophat2_indexes:
+  name: tophat2 index
+  extensions:
+    - .bt2

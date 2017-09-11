@@ -1,4 +1,4 @@
-<tool id="data_manager_select_index_by_path" name="Select index by path manager" tool_type="manage_data" version="0.0.1">
+<tool id="data_manager_select_index_by_path" name="Select index by path manager" tool_type="manage_data" version="0.0.2">
     <description>path inputer</description>
     <command interpreter="python">
         path_name_value_key_manager.py
@@ -14,8 +14,8 @@
         <param name="dbkey" type="text" value="" label="dbkey field for the entry.  Defaults to value if left blank." />
         <param name="name" type="text" value="" label="name field for the entry. Defaults to the file name from path if left blank." />
         <param name="path" type="text" value="" label="path field for the entry" />
-        <param name="data_table" type="text" value="" label="data table for the index">
-          <option value='all_fasta'>all_fasta --no_prefix</option>
+        <param name="data_table" type="select" value="" label="data table for the index">
+          <option value='all_fasta'>all_fasta</option>
           <option value='bowtie2_indexes'>bowtie2_indexes</option>
           <option value='bowtie_indexes'>bowtie_indexes</option>
           <option value='bowtie_indexes_color'>bowtie_indexes_color</option>
@@ -23,10 +23,9 @@
           <option value='bwameth_indexes'>bwameth_indexes</option>
           <option value='fasta_indexes'>fasta_indexes</option>
           <option value='gatk_picard_indexes'>gatk_picard_indexes</option>
-          <option value='gemini_databases'>gemini_databases</option>
           <option value='gene_transfer'>gene_transfer</option>
           <option value='hisat2_indexes'>hisat2_indexes</option>
-          <option value='kallisto_indexes'>kallisto_indexes --no-prefix</option>
+          <option value='kallisto_indexes'>kallisto_indexes</option>
           <option value='picard_indexes'>picard_indexes</option>
           <option value='tophat2_indexes'>tophat2_indexes</option>
         </param>
