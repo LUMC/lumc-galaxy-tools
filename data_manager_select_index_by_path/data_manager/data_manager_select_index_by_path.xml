@@ -13,8 +13,8 @@
         <param name="value" type="text" value="" label="value field for the entry.  Defaults to name if left blank." />
         <param name="dbkey" type="text" value="" label="dbkey field for the entry.  Defaults to value if left blank." />
         <param name="name" type="text" value="" label="name field for the entry. Defaults to the file name from path if left blank." />
-        <param name="path" type="select" value="" label="path field for the entry" />
-        <param name="data_table" type="text" value="" label="data table for the index">
+        <param name="path" type="text" value="" label="path field for the entry" />
+        <param name="data_table" type="select" value="" label="data table for the index">
           <option value='all_fasta --no_prefix'>all_fasta</option>
           <option value='bowtie2_indexes'>bowtie2_indexes</option>
           <option value='bowtie_indexes'>bowtie_indexes</option>
