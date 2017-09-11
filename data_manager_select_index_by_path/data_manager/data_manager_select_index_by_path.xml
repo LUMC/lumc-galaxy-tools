@@ -23,7 +23,6 @@
           <option value='bwameth_indexes'>bwameth_indexes</option>
           <option value='fasta_indexes'>fasta_indexes</option>
           <option value='gatk_picard_indexes'>gatk_picard_indexes</option>
-          <option value='gemini_databases'>gemini_databases</option>
           <option value='gene_transfer'>gene_transfer</option>
           <option value='hisat2_indexes'>hisat2_indexes</option>
           <option value='kallisto_indexes'>kallisto_indexes --no-prefix</option>

@@ -30,8 +30,6 @@ fasta_indexes:
     - .fai
 gatk_picard_index:
   name: picard index for GATK
-gemini_databases:
-  name: gemini database
 gene_transfer:
   name: Gene Transfer File
   extensions:

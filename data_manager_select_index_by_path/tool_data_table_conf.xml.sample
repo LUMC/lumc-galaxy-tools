@@ -32,10 +32,6 @@
         <columns>value, dbkey, name, path</columns>
         <file path="tool-data/gatk_sorted_picard_index.loc" />
     </table>
-    <table name="gemini_databases" comment_char="#" allow_duplicate_entries="False">
-        <columns>value, dbkey, name, path</columns>
-        <file path="tool-data/gemini_databases.loc" />
-    </table>
     <table name="gene_transfer" comment_char="#">
         <columns>value, dbkey, name, path</columns>
         <file path="tool-data/gene_transfer.loc" />

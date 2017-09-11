@@ -65,14 +65,6 @@
                 <column name="path" />
             </output>
         </data_table>
-        <data_table name="gemini_databases">
-            <output>
-                <column name="value" />
-                <column name="dbkey" />
-                <column name="name" />
-                <column name="path" />
-            </output>
-        </data_table>
         <data_table name="gene_transfer">
             <output>
                 <column name="value" />
