@@ -6,17 +6,14 @@ bowtie2_indexes:
   name: bowtie2 index
   extensions:
     - .bt2
-    - .fa
 bowtie_indexes:
   name: bowtie index
   extensions:
     - .ebwt
-    - .fa
 bowtie_indexes_color:
   name: bowtie color index
   extensions:
     - .ebwt
-    - .fa
 bwa_mem_indexes:
   name: bwa mem index
   extensions:
@@ -55,4 +52,3 @@ tophat2_indexes:
   name: tophat2 index
   extensions:
     - .bt2
-    - .fa

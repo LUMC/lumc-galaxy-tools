@@ -32,6 +32,16 @@ def prefix_exists(directory, prefix):
     # Empty list should return False
     return bool(matched_files)
 
+def prefix_plus_extension_exists(directory, prefix, extension):
+    '''checks if files exist with prefix in a directory. Returns Boolean'''
+    matched_files = []
+    directory_files = os.listdir(directory)
+    for directory_file in directory_files:
+        if directory_file.startswith(prefix) and directory_file.endswith(extension):
+            matched_files.append(directory_file)
+    # Empty list should return False
+    return bool(matched_files)
+
 def main():
 
     #value = "test_value"
@@ -53,11 +63,16 @@ def main():
     path = check_param("path", options.path)
 
     # Check if file or prefix exists
+    indexes = yaml.load(file(indexes.yml))
+    index_dict = indexes.get(data_table_name,{})
+    index_name = index_dict.get('name',index)
+    index_extensions = index_dict.get('extensions', [''])
     if not options.no_prefix:
         dirname = os.path.dirname(path)
         prefix = os.path.basename(path)
-        if not prefix_exists(dirname,prefix):
-            raise Exception( 'Unable to find files with prefix "{0}" in {1}.'.format( prefix, dirname ) )
+        for extension in index_extensions:
+            if not prefix_plus_extension_exists(dirname,prefix,extension):
+                raise Exception( 'Unable to find files with prefix "{0}" and extension "{1}" in {2}. Is this a valid {3}?'.format( prefix, extension, dirname, index_name ) )
     else:
         if not os.path.exists(path):
             raise Exception( 'Unable to find path {0}.'.format( path ) )
