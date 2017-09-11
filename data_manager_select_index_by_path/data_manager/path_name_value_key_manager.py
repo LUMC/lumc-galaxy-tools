@@ -58,7 +58,6 @@ def main():
     parser.add_argument( '--path', action='store', type=str, default=None, help='path' )
     parser.add_argument( '--data_table_name', action='store', type=str, default=None, help='path' )
     parser.add_argument( '--json_output_file', action='store', type=str, default=None, help='path' )
-    parser.add_argument( '--no_prefix', action='store_true', help='Does not check the prefix but checks the path. Useful for indexes that reference a single file.')
     options = parser.parse_args()
 
     path = check_param("path", options.path)
@@ -75,7 +74,8 @@ def main():
     index_dict = indexes.get(data_table_name,{})
     index_name = index_dict.get('name','index')
     index_extensions = index_dict.get('extensions', [''])
-    if not options.no_prefix:
+    no_prefix = index_dict.get('no_prefix', False)
+    if not no_prefix:
         dirname = os.path.dirname(path)
         prefix = basename
         for extension in index_extensions:
