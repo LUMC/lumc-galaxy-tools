@@ -26,12 +26,10 @@ bwameth_indexes:
   name: bwa_meth_index
 fasta_indexes:
   name: fasta index
-  etensions:
+  extensions:
     - .fai
 gatk_picard_index:
   name: picard index for GATK
-  extensions:
-    - .fai
 gemini_databases:
   name: gemini database
 gene_transfer:
@@ -40,14 +38,12 @@ gene_transfer:
     - .gtf
 hisat2_indexes:
   name: hisat2 index
-  extenstions:
+  extensions:
     - .ht2
 kallisto_indexes:
   name: kallisto index
 picard_indexes:
   name: picard index
-  extensions:
-    - .fai
 tophat2_indexes:
   name: tophat2 index
   extensions:
