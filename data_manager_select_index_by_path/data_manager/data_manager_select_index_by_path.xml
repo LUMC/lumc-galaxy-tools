@@ -1,4 +1,4 @@
-<tool id="data_manager_select_index_by_path" name="Select index by path manager" tool_type="manage_data" version="0.0.2">
+<tool id="data_manager_select_index_by_path" name="Select index by path manager" tool_type="manage_data" version="0.0.3">
     <description>path inputer</description>
     <command interpreter="python">
         path_name_value_key_manager.py
