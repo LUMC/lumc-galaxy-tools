@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import json
 import argparse
@@ -15,7 +15,7 @@ def _add_data_table_entry( data_manager_dict, data_table_name, data_table_entry 
 def check_param(name, value, default=None,  check_tab=True):
     if value in [ None, '', '?' ]:
         if default:
-            print "Using {0} for {1} as no value provided".format( default, name )
+            print("Using {0} for {1} as no value provided".format(default, name))
             value = default
         else:
             raise Exception( '{0} is not a valid {1}. You must specify a valid {1}.'.format( value, name ) )
@@ -87,7 +87,7 @@ def main():
 
     if os.path.exists(json_output_file):
         params = json.loads( open( json_output_file ).read() )
-        print "params", params
+        print("params", params)
     else:
         params = {}
 
