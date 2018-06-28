@@ -37,13 +37,14 @@
     <outputs>
         <data name="json_output_file" format="data_manager_json"/>
     </outputs>
+    <!--  Disabling planemo tests for now.
     <tests>
         <test>
             <param name="path" value="EboVir3.fa"/>
             <param name="data_table" value="all_fasta"/>
-
         </test>
     </tests>
+    -->
 
     <help>
 Adds a server path to the selected data table.
