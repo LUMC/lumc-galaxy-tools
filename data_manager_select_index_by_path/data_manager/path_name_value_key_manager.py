@@ -68,7 +68,7 @@ class DataTable(object):
         check_tab('dbkey', self.dbkey)
 
     def get_index_properties(self) -> dict:
-        with self.indexes_properties_file.open("r") as properties_file:
+        with self.indexes_properties_file.open('r') as properties_file:
             indexes = yaml.load(properties_file)
         index_properties = indexes.get(self.data_table_name)
         if not index_properties:
@@ -100,7 +100,7 @@ class DataTable(object):
 
     @property
     def data_manager_dict(self) -> dict:
-        data_table_entry = dict(value=self.value, dbkey=self.dbkey, name=self.name, path=self.index_path)
+        data_table_entry = dict(value=self.value, dbkey=self.dbkey, name=self.name, path=self.index_path.__str__())
         data_manager_dict = dict()
         data_manager_dict[self.data_table_name] = data_table_entry
         return data_manager_dict
