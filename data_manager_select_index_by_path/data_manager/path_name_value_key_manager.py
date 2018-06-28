@@ -5,23 +5,57 @@ import argparse
 import os
 import yaml
 
+def argument_parser():
+
+    #value = "test_value"
+    #name = "test_name"
+    #print '{0} other {1} more{0}'.format(value, name )
+    #print '{0} is not a valid {1}. It may not contain a tab.'.format( value, name )
+
+    #Parse Command Line
+    parser = argparse.ArgumentParser()
+    parser.add_argument( '--value', action='store', type=str, default=None, help='value' )
+    parser.add_argument( '--dbkey', action='store', type=str, default=None, help='dbkey' )
+    parser.add_argument( '--name',  action='store', type=str, default=None, help='name' )
+    parser.add_argument( '--path', action='store', type=str, default=None, help='path',required=True )
+    parser.add_argument( '--data_table_name', action='store', type=str, default=None, help='path',required=True )
+    parser.add_argument( '--json_output_file', action='store', type=str, default=None, help='path', required=True )
+    return parser
+
+class DataTable:
+    def __init__(self,
+                 index_path,
+                 data_table_name,
+                 name=None,
+                 dbkey=None,
+                 value=None,
+                 ):
+        self.index_path = index_path
+        self.data_table_name = data_table_name
+        self.name = name if name else os.path.splitext(os.path.basename(index_path))[0]
+        self.value = value if value else self.name
+        self.dbkey = dbkey if dbkey else self.value
+
+        self.check_params()
+
+
+    def check_params(self):
+        def check_tab(name, value):
+            if '\t' in value:
+                raise ValueError(
+                    '{0} is not a valid {1}. It may not contain a tab because these are used as seperators by galaxy .'.format(value, name))
+
+        check_tab('name', self.name)
+        check_tab('index_path',self.index_path)
+        check_tab('value',self.value)
+        check_tab('dbkey',self.dbkey)
+
 def _add_data_table_entry( data_manager_dict, data_table_name, data_table_entry ):
     data_manager_dict['data_tables'] = data_manager_dict.get( 'data_tables', {} )
     data_manager_dict['data_tables'][ data_table_name ] = data_manager_dict['data_tables'].get( data_table_name, [] )
     data_manager_dict['data_tables'][ data_table_name ].append( data_table_entry )
     return data_manager_dict
 
-
-def check_param(name, value, default=None,  check_tab=True):
-    if value in [ None, '', '?' ]:
-        if default:
-            print("Using {0} for {1} as no value provided".format(default, name))
-            value = default
-        else:
-            raise Exception( '{0} is not a valid {1}. You must specify a valid {1}.'.format( value, name ) )
-    if check_tab and "\t" in value:
-        raise Exception( '{0} is not a valid {1}. It may not contain a tab because these are used as seperators by galaxy .'.format( value, name ) )
-    return value
 
 def prefix_exists(directory, prefix):
     '''checks if files exist with prefix in a directory. Returns Boolean'''
@@ -44,30 +78,15 @@ def prefix_plus_extension_exists(directory, prefix, extension):
     return bool(matched_files)
 
 def main():
+    options = argument_parser().parse_args()
 
-    #value = "test_value"
-    #name = "test_name"
-    #print '{0} other {1} more{0}'.format(value, name )
-    #print '{0} is not a valid {1}. It may not contain a tab.'.format( value, name )
-
-    #Parse Command Line
-    parser = argparse.ArgumentParser()
-    parser.add_argument( '--value', action='store', type=str, default=None, help='value' )
-    parser.add_argument( '--dbkey', action='store', type=str, default=None, help='dbkey' )
-    parser.add_argument( '--name',  action='store', type=str, default=None, help='name' )
-    parser.add_argument( '--path', action='store', type=str, default=None, help='path' )
-    parser.add_argument( '--data_table_name', action='store', type=str, default=None, help='path' )
-    parser.add_argument( '--json_output_file', action='store', type=str, default=None, help='path' )
-    options = parser.parse_args()
-
-    path = check_param("path", options.path)
-    basename = os.path.basename(path)
-    filename = os.path.splitext(basename)[0]
-    name = check_param("name", options.name, default=filename)
-    value = check_param("value", options.value, default=name)
-    dbkey = check_param("dbkey", options.dbkey, default=value)
-    data_table_name = check_param("data_table_name", options.data_table_name)
-    json_output_file = check_param("json_output_file", options.json_output_file, check_tab=False)
+    data_table = DataTable(index_path= options.path,
+                           data_table_name = options.data_table_name,
+                           name= options.name,
+                           value= options.value,
+                           dbkey= options.dbkey
+                           )
+    json_output_file =  options.json_output_file
 
     # Check if file or prefix exists
     indexes = yaml.load(file(os.path.join(os.path.dirname(__file__), 'indexes.yml')))
