@@ -7,5 +7,5 @@ owner: rhpvorderman
 type: unrestricted
 exclude:
   - test-data/
-  - pytest
+  - data_manager/test_path_name_value_key_manager.py
   - README.md
