@@ -7,4 +7,5 @@ owner: rhpvorderman
 type: unrestricted
 exclude:
   - test-data/
+  - pytest
   - README.md
