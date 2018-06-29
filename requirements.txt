@@ -3,3 +3,4 @@ planemo
 pytest
 flake8
 pytest-cov
+codacy-coverage

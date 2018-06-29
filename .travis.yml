@@ -7,4 +7,5 @@ install:
   - pip install -r requirements.txt
 script:
   - flake8 --max-line-length=120 data_manager_select_index_by_path/data_manager
-  - pytest --cov-report term --cov data_manager_select_index_by_path/data_manager data_manager_select_index_by_path/data_manager
+  - pytest --cov-report xml --cov data_manager_select_index_by_path/data_manager data_manager_select_index_by_path/data_manager
+  - python-codacy-coverage -r coverage.xml
