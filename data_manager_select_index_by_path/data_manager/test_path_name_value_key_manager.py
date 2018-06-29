@@ -4,10 +4,17 @@ import pytest
 import json
 from pathlib import Path
 
-from path_name_value_key_manager import DataTable
+from path_name_value_key_manager import DataTable,check_tab
 
 indexes_yml = Path(__file__).parent / "indexes.yml"
 test_data = Path(__file__).parent / "../test-data"
+
+def test_check_tab():
+    check_tab("test", "This text does not contain a tab and succeeds")
+
+@pytest.mark.xfail
+def test_check_tab_fail():
+    check_tab("test","This text does contain a \t and fails")
 
 
 def data_table_test(index_path: Path,
@@ -32,6 +39,20 @@ def test_data_table():
     assert (dm_json['bwa_mem_indexes'] == {"name": "EboVir3", "value": "EboVir3", "dbkey": "EboVir3",
                                            "path": str((test_data / "bwa_mem_index/EboVir3.fa"))})
 
+
+@pytest.mark.xfail
+def test_non_existing_table():
+    data_table_test(test_data / "bwa_mem_index/EboVir3.fa",
+                    data_table_name="bla_indexes")
+
+def test_all_fasta_table():
+    data_table_test(test_data /"EboVir3.fa",
+                    data_table_name="all_fasta")
+
+@pytest.mark.xfail
+def test_index_path_not_exist():
+    data_table_test(test_data /"NotExists.fa",
+                    data_table_name="all_fasta")
 
 def test_bowtie2_index():
     data_table_test(
