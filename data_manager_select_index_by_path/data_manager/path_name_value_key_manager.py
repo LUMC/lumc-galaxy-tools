@@ -69,7 +69,7 @@ class DataTable(object):
 
     def get_index_properties(self) -> dict:
         with self.indexes_properties_file.open('r') as properties_file:
-            indexes = yaml.load(properties_file)
+            indexes = yaml.safe_load(properties_file)
         index_properties = indexes.get(self.data_table_name)
         if not index_properties:
             raise ValueError("{0} not a supported table name".format(self.data_table_name))
