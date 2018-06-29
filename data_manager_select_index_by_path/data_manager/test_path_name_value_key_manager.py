@@ -26,12 +26,19 @@ def test_DataTable():
      assert(dt.name == "EboVir3")
      assert(dt.value == "EboVir3")
      assert(dt.dbkey == "EboVir3")
-
+     dm_json = json.loads(dt.data_manager_json)
+     print(dm_json)
+     assert(dm_json['bwa_mem_indexes'] == {"name":"EboVir3", "value":"EboVir3","dbkey":"EboVir3","path": str((test_data / "bwa_mem_index/EboVir3.fa"))})
 def test_bowtie2_index():
     DataTableTest(
         index_path=test_data / "bowtie2_index/EboVir3",
         data_table_name="bowtie2_indexes")
 
+@pytest.mark.xfail
+def test_bowtie2_index_fail():
+    DataTableTest(
+        index_path=test_data / "bowtie2_index/EboVir3.fa",
+        data_table_name="bowtie2_indexes")
 
 def test_bwa_index():
     DataTableTest(index_path=test_data / "bwa_mem_index/EboVir3.fa",
