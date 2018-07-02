@@ -9,10 +9,10 @@ import yaml
 
 def argument_parser():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--value', action='store', type=str, help='value')
-    parser.add_argument('--dbkey', action='store', type=str, help='dbkey')
-    parser.add_argument('--name', action='store', type=str, help='name')
-    parser.add_argument('--path', action='store', type=str, help='path',
+    parser.add_argument('--value', type=str, help='value')
+    parser.add_argument('--dbkey', type=str, help='dbkey')
+    parser.add_argument('--name',  type=str, help='name')
+    parser.add_argument('--path',  type=str, help='path',
                         required=True)
     parser.add_argument('--data_table_name', action='store', type=str,
                         help='Name of the data table',
@@ -20,6 +20,7 @@ def argument_parser():
     parser.add_argument('--json_output_file', action='store', type=Path,
                         help='Json output file',
                         required=True)
+    parser.add_argument("--extra-columns", type=str, help = 'Yaml formatted string with extra columns and their values. For example \'{"with-gtf":"0"}\' for STAR indexes' )
     return parser
 
 
@@ -50,13 +51,15 @@ class DataTable(object):
                  name: str = None,
                  dbkey: str = None,
                  value: str = None,
+                 extra_columns: dict = None
                  ):
         self.index_path = index_path
         self.data_table_name = data_table_name
         self.name = name if name else str(self.index_path.with_suffix(
             '').name)
-        self.value = value if value else self.name
-        self.dbkey = dbkey if dbkey else self.value
+        self.value = value if value is not None else self.name
+        self.dbkey = dbkey if dbkey is not None else self.value
+        self.extra_columns = extra_columns if extra_columns is not None else {}
         self.indexes_properties_file = indexes_properties_file
 
         self.check_params()
@@ -71,6 +74,23 @@ class DataTable(object):
         check_tab('index_path', str(self.index_path.absolute().name))
         check_tab('value', self.value)
         check_tab('dbkey', self.dbkey)
+        self.check_extra_columns()
+
+
+    def check_extra_columns(self):
+        index_properties = self.get_index_properties()
+        index_ev = set(index_properties.get("extra_columns", []))
+        given_ev = self.extra_columns.keys()
+        if index_ev != given_ev:
+            if len(index_ev) > 0:
+                raise ValueError(
+                    "Values for the following columns should be "
+                    "supplied \'{0}\'.".format(
+                        index_ev))
+            if len(index_ev == 0):
+                raise ValueError("The table \'{0}\' does not have extra columns")
+        for key, value in self.extra_columns:
+            check_tab(key, value)
 
     def get_index_properties(self) -> dict:
         with self.indexes_properties_file.open('r') as properties_file:
@@ -110,7 +130,7 @@ class DataTable(object):
                     raise FileNotFoundError(
                         'Unable to find files with prefix "{0}" '
                         'and extension "{1}" in {2}. Is this a valid {3}?'
-                        .format(
+                            .format(
                             prefix,
                             extension,
                             self.index_path.parent,
@@ -123,7 +143,8 @@ class DataTable(object):
     @property
     def data_manager_dict(self) -> dict:
         data_table_entry = dict(value=self.value, dbkey=self.dbkey,
-                                name=self.name, path=str(self.index_path))
+                                name=self.name,
+                                path=str(self.index_path)) + self.extra_columns
         data_manager_dict = dict()
         data_manager_dict[self.data_table_name] = data_table_entry
         return data_manager_dict

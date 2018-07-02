@@ -48,6 +48,19 @@ picard_indexes:
   extensions:
     - ".fa"
     - ".dict"
+rna_star_index2:
+  name: "Star index"
+  extra_columns:
+    - with_gtf
+  folder:
+    - chrLength.txt
+    - chrNameLength.txt
+    - chrStart.txt
+    - chrName.txt
+    - Genome
+    - SA
+    - SAindex
+    - genomeParameters.txt
 tophat2_indexes:
   name: tophat2 index
   extensions:
