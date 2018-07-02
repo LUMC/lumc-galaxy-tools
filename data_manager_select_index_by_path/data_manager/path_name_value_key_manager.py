@@ -85,12 +85,17 @@ class DataTable(object):
 
         # If the index is not a prefix, the index file is taken to be the path itself.
         index_is_a_prefix = self.index_properties.get('prefix', True)
+        prefix_strip_extension = self.index_properties.get('prefix_strip_extension', False)
         if index_is_a_prefix:
+            if prefix_strip_extension:
+                prefix = self.index_path.with_suffix("").name.__str__()
+            else:
+                prefix = self.index_path.name.__str__()
             for extension in index_extensions:
-                if not prefix_plus_extension_exists(self.index_path.parent, self.index_path.name, extension):
+                if not prefix_plus_extension_exists(self.index_path.parent, prefix, extension):
                     raise FileNotFoundError(
                         'Unable to find files with prefix "{0}" and extension "{1}" in {2}. Is this a valid {3}?'
-                        .format(self.index_path.name, extension, self.index_path.parent, index_name))
+                        .format(prefix, extension, self.index_path.parent, index_name))
         else:
             if not self.index_path.exists():
                 raise FileNotFoundError('Unable to find path {0}.'.format(self.index_path))

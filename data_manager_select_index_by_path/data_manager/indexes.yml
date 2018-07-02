@@ -44,6 +44,10 @@ kallisto_indexes:
   prefix: False
 picard_indexes:
   name: picard index
+  prefix_strip_extension: True
+  extensions:
+    - ".fa"
+    - ".dict"
 tophat2_indexes:
   name: tophat2 index
   extensions:
