@@ -144,7 +144,8 @@ class DataTable(object):
     def data_manager_dict(self) -> dict:
         data_table_entry = dict(value=self.value, dbkey=self.dbkey,
                                 name=self.name,
-                                path=str(self.index_path)) + self.extra_columns
+                                path=str(self.index_path),
+                                **self.extra_columns)
         data_manager_dict = dict()
         data_manager_dict[self.data_table_name] = data_table_entry
         return data_manager_dict
