@@ -167,7 +167,8 @@ def main():
                            name=options.name,
                            value=options.value,
                            dbkey=options.dbkey,
-                           indexes_properties_file=index_properties_file)
+                           indexes_properties_file=index_properties_file,
+                           extra_columns=options.extra_columns)
 
     # save info to json file
     with open(options.json_output_file, 'w') as output_file:
