@@ -11,8 +11,8 @@ def argument_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument('--value', type=str, help='value')
     parser.add_argument('--dbkey', type=str, help='dbkey')
-    parser.add_argument('--name',  type=str, help='name')
-    parser.add_argument('--path',  type=str, help='path',
+    parser.add_argument('--name', type=str, help='name')
+    parser.add_argument('--path', type=str, help='path',
                         required=True)
     parser.add_argument('--data_table_name', action='store', type=str,
                         help='Name of the data table',
@@ -20,7 +20,10 @@ def argument_parser():
     parser.add_argument('--json_output_file', action='store', type=Path,
                         help='Json output file',
                         required=True)
-    parser.add_argument("--extra-columns", type=str, help = 'Yaml formatted string with extra columns and their values. For example \'{"with-gtf":"0"}\' for STAR indexes' )
+    parser.add_argument("--extra-columns", type=str,
+                        help='Yaml formatted string with extra columns '
+                             'and their values. For example '
+                             '\'{"with-gtf":"0"}\' for STAR indexes')
     return parser
 
 
@@ -76,19 +79,19 @@ class DataTable(object):
         check_tab('dbkey', self.dbkey)
         self.check_extra_columns()
 
-
     def check_extra_columns(self):
         index_properties = self.get_index_properties()
-        index_ev = set(index_properties.get("extra_columns", []))
-        given_ev = self.extra_columns.keys()
-        if index_ev != given_ev:
-            if len(index_ev) > 0:
+        index_extra_columns = set(index_properties.get("extra_columns", []))
+        given_extra_columns = self.extra_columns.keys()
+        if index_extra_columns != given_extra_columns:
+            if len(index_extra_columns) > 0:
                 raise ValueError(
                     "Values for the following columns should be "
                     "supplied \'{0}\'.".format(
-                        index_ev))
-            if len(index_ev == 0):
-                raise ValueError("The table \'{0}\' does not have extra columns")
+                        index_extra_columns))
+            if len(index_extra_columns) == 0:
+                raise ValueError(
+                    "The table \'{0}\' does not have extra columns")
         for key, value in self.extra_columns:
             check_tab(key, value)
 
@@ -130,7 +133,7 @@ class DataTable(object):
                     raise FileNotFoundError(
                         'Unable to find files with prefix "{0}" '
                         'and extension "{1}" in {2}. Is this a valid {3}?'
-                            .format(
+                        .format(
                             prefix,
                             extension,
                             self.index_path.parent,
