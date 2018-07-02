@@ -9,13 +9,13 @@ import yaml
 
 def argument_parser():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--value', action='store', type=str, default=None, help='value')
-    parser.add_argument('--dbkey', action='store', type=str, default=None, help='dbkey')
-    parser.add_argument('--name', action='store', type=str, default=None, help='name')
-    parser.add_argument('--path', action='store', type=str, default=None, help='path', required=True)
-    parser.add_argument('--data_table_name', action='store', type=str, default=None, help='Name of the data table',
+    parser.add_argument('--value', action='store', type=str, help='value')
+    parser.add_argument('--dbkey', action='store', type=str, help='dbkey')
+    parser.add_argument('--name', action='store', type=str, help='name')
+    parser.add_argument('--path', action='store', type=str, help='path', required=True)
+    parser.add_argument('--data_table_name', action='store', type=str, help='Name of the data table',
                         required=True)
-    parser.add_argument('--json_output_file', action='store', type=Path, default=None, help='Json output file',
+    parser.add_argument('--json_output_file', action='store', type=Path, help='Json output file',
                         required=True)
     return parser
 
@@ -29,11 +29,8 @@ def check_tab(name: str, value: str):
 
 def prefix_plus_extension_exists(directory: Path, prefix: str, extension: str):
     """checks if files exist with prefix in a directory. Returns Boolean"""
-    matched_files = []
-    for directory_file in directory.iterdir():
-        if directory_file.name.startswith(prefix) and directory_file.name.endswith(extension):
-            matched_files.append(directory_file)
-    # Empty list should return False
+    matched_files = [directory_file for directory_file in directory.iterdir() if directory_file.name.startswith(prefix) and directory_file.suffix==extension]
+     # Empty list should return False
     return bool(matched_files)
 
 
@@ -43,9 +40,9 @@ class DataTable(object):
                  index_path: Path,
                  data_table_name: str,
                  indexes_properties_file: Path,
-                 name=None,
-                 dbkey=None,
-                 value=None,
+                 name: str = None,
+                 dbkey: str = None,
+                 value: str = None,
                  ):
         self.index_path = index_path
         self.data_table_name = data_table_name
