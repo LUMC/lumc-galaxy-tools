@@ -2,7 +2,7 @@ all_fasta:
   name: fasta file
   extensions:
     - .fa
-  no_prefix: True
+  prefix: False
 bowtie2_indexes:
   name: bowtie2 index
   extensions:
@@ -41,9 +41,13 @@ hisat2_indexes:
     - .ht2
 kallisto_indexes:
   name: kallisto index
-  no_prefix: True
+  prefix: False
 picard_indexes:
   name: picard index
+  prefix_strip_extension: True
+  extensions:
+    - ".fa"
+    - ".dict"
 tophat2_indexes:
   name: tophat2 index
   extensions:

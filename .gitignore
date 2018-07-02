@@ -2,3 +2,6 @@
 .venv
 data_manager_select_index_by_path/tool_test_output*
 data_manager_select_index_by_path/test.json
+.pytest_cache
+__pycache__
+.coverage

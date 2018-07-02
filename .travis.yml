@@ -1,0 +1,11 @@
+language: python
+sudo: false
+python:
+  - 3.5
+  - 3.6
+install:
+  - pip install -r requirements.txt
+script:
+  - flake8 data_manager_select_index_by_path/data_manager
+  - pytest --cov-report xml --cov data_manager_select_index_by_path/data_manager data_manager_select_index_by_path/data_manager
+  - python-codacy-coverage -r coverage.xml

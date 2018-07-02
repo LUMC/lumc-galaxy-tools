@@ -1,6 +1,10 @@
-<tool id="data_manager_select_index_by_path" name="Select index by path manager" tool_type="manage_data" version="0.0.2">
+<tool id="data_manager_select_index_by_path" name="Select index by path manager" tool_type="manage_data" version="0.0.3">
+    <requirements>
+        <!-- Away with python 2! -->
+        <requirement type="package" version="3">python</requirement>
+    </requirements>
     <description>path inputer</description>
-    <command interpreter="python">
+    <command detect_errors="exit_code" interpreter="python">
         path_name_value_key_manager.py
         --value "${value}"
         --dbkey "${dbkey}"
@@ -33,7 +37,6 @@
     <outputs>
         <data name="json_output_file" format="data_manager_json"/>
     </outputs>
-
     <help>
 Adds a server path to the selected data table.
 
