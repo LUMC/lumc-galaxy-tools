@@ -53,8 +53,8 @@ class DataTable(object):
                  ):
         self.index_path = index_path
         self.data_table_name = data_table_name
-        self.name = name if name else self.index_path.with_suffix(
-            '').name.__str__()
+        self.name = name if name else str(self.index_path.with_suffix(
+            '').name)
         self.value = value if value else self.name
         self.dbkey = dbkey if dbkey else self.value
         self.indexes_properties_file = indexes_properties_file
@@ -68,7 +68,7 @@ class DataTable(object):
     def check_params(self):
 
         check_tab('name', self.name)
-        check_tab('index_path', self.index_path.absolute().__str__())
+        check_tab('index_path', str(self.index_path.absolute().name))
         check_tab('value', self.value)
         check_tab('dbkey', self.dbkey)
 
@@ -76,14 +76,14 @@ class DataTable(object):
         with self.indexes_properties_file.open('r') as properties_file:
             indexes = yaml.safe_load(properties_file)
         index_properties = indexes.get(self.data_table_name)
-        if not index_properties:
+        if index_properties is None:
             raise ValueError(
                 "{0} not a supported table name".format(self.data_table_name))
         return index_properties
 
     def check_index_file_presence(self):
         index_name = self.index_properties.get('name')
-        if not index_name:
+        if index_name is None:
             raise ValueError(
                 "Property 'name' not defined for '{0}',"
                 " please contact the developers to correct the mistake.")
@@ -101,9 +101,9 @@ class DataTable(object):
             'prefix_strip_extension', False)
         if index_is_a_prefix:
             if prefix_strip_extension:
-                prefix = self.index_path.with_suffix("").name.__str__()
+                prefix = str(self.index_path.with_suffix("").name)
             else:
-                prefix = self.index_path.name.__str__()
+                prefix = str(self.index_path.name)
             for extension in index_extensions:
                 if not prefix_plus_extension_exists(self.index_path.parent,
                                                     prefix, extension):
@@ -123,7 +123,7 @@ class DataTable(object):
     @property
     def data_manager_dict(self) -> dict:
         data_table_entry = dict(value=self.value, dbkey=self.dbkey,
-                                name=self.name, path=self.index_path.__str__())
+                                name=self.name, path=str(self.index_path))
         data_manager_dict = dict()
         data_manager_dict[self.data_table_name] = data_table_entry
         return data_manager_dict
@@ -151,7 +151,6 @@ def main():
     # save info to json file
     with open(options.json_output_file, 'w') as output_file:
         output_file.write(data_table.data_manager_json)
-        output_file.write("\n")
 
 
 if __name__ == "__main__":
