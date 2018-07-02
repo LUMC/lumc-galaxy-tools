@@ -2,9 +2,12 @@
 
 import pytest
 import json
+import tempfile
 from pathlib import Path
 
-from path_name_value_key_manager import DataTable, check_tab
+from path_name_value_key_manager import DataTable, check_tab, main
+
+TEST_OUTPUT_DIR = tempfile.mkdtemp(".d","tmp_data_manager_select_index_by_path")
 
 indexes_yml = Path(__file__).parent / Path("indexes.yml")
 test_data = Path(__file__).parent.parent / Path("test-data")
