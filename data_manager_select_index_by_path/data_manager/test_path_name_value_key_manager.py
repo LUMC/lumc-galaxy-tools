@@ -44,18 +44,19 @@ def test_data_table():
 
 
 def test_non_existing_table():
-    data_table_test(test_data / "bwa_mem_index/EboVir3.fa",
-                    data_table_name="bla_indexes")
+    with pytest.raises(ValueError, match="bla_indexes not a supported table name"):
+        data_table_test(test_data / "bwa_mem_index/EboVir3.fa",
+            data_table_name="bla_indexes")
 
 
 def test_all_fasta_table():
     data_table_test(test_data / "EboVir3.fa",
-                    data_table_name="all_fasta")
+        data_table_name="all_fasta")
 
 
-@pytest.mark.xfail
 def test_index_path_not_exist():
-    data_table_test(test_data / "NotExists.fa",
+    with pytest.raises(FileNotFoundError, match="Unable to find path"):
+        data_table_test(test_data / "NotExists.fa",
                     data_table_name="all_fasta")
 
 
@@ -65,11 +66,11 @@ def test_bowtie2_index():
         data_table_name="bowtie2_indexes")
 
 
-@pytest.mark.xfail
 def test_bowtie2_index_fail():
-    data_table_test(
-        index_path=test_data / "bowtie2_index/EboVir3.fa",
-        data_table_name="bowtie2_indexes")
+    with pytest.raises(FileNotFoundError, match="Unable to find files with prefix"):
+        data_table_test(
+            index_path=test_data / "bowtie2_index/EboVir3.fa",
+            data_table_name="bowtie2_indexes")
 
 
 def test_bwa_index():
