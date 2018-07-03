@@ -1,7 +1,29 @@
+---
 categories: [Data Managers]
-description: A data manager to register already build indexes in Galaxy's data tables
-remote_repository_url: https://github.com/LUMC/lumc-galaxy-tools/tree/master/data_manager_select_index_by_path
-long_description: This is a fork of the data_manager_all_fasta_by_path data manager by Cristian-B (https://github.com/Christian-B) (https://github.com/Christian-B/galaxy_shedtools/tree/master/all_fasta_by_path). The all_fasta_by_path data manager was forked on 2017-09-07 from Christian-B's galaxy_shedtools repository at commit d9f5343. (https://github.com/Christian-B/galaxy_shedtools). This tool aims to provide the same functionality for all indexes that have a data table that follows the value,dbkey,name,path layout.
+description:
+  A data manager to register already build indexes in Galaxy's data tables
+remote_repository_url:
+  https://github.com/LUMC/lumc-galaxy-tools/tree/master/data_manager_select_index_by_path
+long_description: |
+  This tool can link galaxy to already built indexes on the filesystem.
+  This tool currently supports the following formats:
+    - FASTA (for all_fasta table)
+    - Bowtie index
+    - Bowtie2 index
+    - BWA index
+    - Fasta index (.fai)
+    - Hisat2 index
+    - Kallisto index
+    - Picard index
+    - Star index
+    - Tophat2 index
+
+  This is a fork of the data_manager_all_fasta_by_path data manager
+  by Cristian-B (https://github.com/Christian-B)
+  (https://github.com/Christian-B/galaxy_shedtools/tree/master/all_fasta_by_path).
+  The all_fasta_by_path data manager was forked on 2017-09-07 from
+  Christian-B's galaxy_shedtools repository at commit d9f5343.
+  (https://github.com/Christian-B/galaxy_shedtools).
 name: data_manager_select_index_by_path
 owner: rhpvorderman
 type: unrestricted
