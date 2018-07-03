@@ -19,8 +19,8 @@ def test_check_tab():
 
 def test_check_tab_fail():
     with pytest.raises(ValueError,
-                       match="This text does contain a "
-                             "\t and fails is not a valid test"):
+                       match="\'This text does contain a "
+                             "\t and fails\' is not a valid \'test\'"):
         check_tab("test", "This text does contain a \t and fails")
 
 
@@ -54,7 +54,7 @@ def test_data_table():
 
 def test_non_existing_table():
     with pytest.raises(ValueError,
-                       match="bla_indexes not a supported table name"):
+                       match="\'bla_indexes\' not a supported table name"):
         data_table_test(test_data / "bwa_mem_index/EboVir3.fa",
                         data_table_name="bla_indexes")
 
@@ -78,7 +78,7 @@ def test_bowtie2_index():
 
 def test_bowtie2_index_fail():
     with pytest.raises(FileNotFoundError,
-                       match="Unable to find files with prefix"):
+                       match="Unable to find files with prefix \'EboVir3.fa\'"):
         data_table_test(
             index_path=test_data / "bowtie2_index/EboVir3.fa",
             data_table_name="bowtie2_indexes")

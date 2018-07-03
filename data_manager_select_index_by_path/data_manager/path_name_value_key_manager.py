@@ -30,7 +30,7 @@ def argument_parser():
 def check_tab(name: str, value: str):
     if '\t' in value:
         raise ValueError(
-            '{0} is not a valid {1}. It may not contain a tab because '
+            '\'{0}\' is not a valid \'{1}\'. It may not contain a tab because '
             'these are used as seperators by galaxy .'.format(
                 value, name))
 
@@ -101,14 +101,14 @@ class DataTable(object):
         index_properties = indexes.get(self.data_table_name)
         if index_properties is None:
             raise ValueError(
-                "{0} not a supported table name".format(self.data_table_name))
+                "\'{0}\' not a supported table name".format(self.data_table_name))
         return index_properties
 
     def check_index_file_presence(self):
         index_name = self.index_properties.get('name')
         if index_name is None:
             raise ValueError(
-                "Property 'name' not defined for '{0}',"
+                "Property \'name\' not defined for \'{0}\',"
                 " please contact the developers to correct the mistake.")
         index_extensions = self.index_properties.get('extensions', [''])
 
@@ -131,12 +131,12 @@ class DataTable(object):
                 if not prefix_plus_extension_exists(self.index_path.parent,
                                                     prefix, extension):
                     raise FileNotFoundError(
-                        'Unable to find files with prefix "{0}" '
-                        'and extension "{1}" in {2}. Is this a valid {3}?'
+                        'Unable to find files with prefix \'{0}\' '
+                        'and extension \'{1}\' in {2}. Is this a valid {3}?'
                         .format(
                             prefix,
                             extension,
-                            self.index_path.parent,
+                            str(self.index_path.parent),
                             index_name))
         else:
             if not self.index_path.exists():
@@ -163,9 +163,9 @@ def main():
 
     if options.json_output_file.exists():
         raise FileExistsError(
-            "'{0}' already exists.".format(str(options.json_output_file)))
+            "\'{0}\' already exists.".format(str(options.json_output_file)))
 
-    index_properties_file = Path(__file__).parent / "indexes.yml"
+    index_properties_file = Path(__file__).parent / Path("indexes.yml")
     data_table = DataTable(index_path=options.path,
                            data_table_name=options.data_table_name,
                            name=options.name,
