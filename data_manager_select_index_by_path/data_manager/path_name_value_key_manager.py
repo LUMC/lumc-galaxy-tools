@@ -88,8 +88,8 @@ class DataTable(object):
             if len(index_extra_columns) > 0:
                 raise ValueError(
                     "Values for the following columns should be "
-                    "supplied \'{0}\'.".format(
-                        index_extra_columns))
+                    "supplied: {0}.".format(
+                        str(index_extra_columns).strip("{}")))
             if len(index_extra_columns) == 0:
                 raise ValueError(
                     "The table \'{0}\' does not have extra columns")

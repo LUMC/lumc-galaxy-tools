@@ -123,6 +123,20 @@ def test_non_existing_table():
                         data_table_name="bla_indexes")
 
 
+def test_rnastar_index_fail_no_extra_column():
+    with pytest.raises(ValueError, match="Values for the following columns should be supplied: 'with-gtf'."):
+        data_table_test(
+            index_path=test_data / "star_index",
+            data_table_name="rnastar_index2")
+
+def test_rnastar_index_fail_wrong_dir():
+    with pytest.raises(FileNotFoundError):
+        DataTable(
+            index_path=test_data / "picard_index",
+            data_table_name="rnastar_index2",
+            extra_columns={'with-gtf':'0'},
+            indexes_properties_file=indexes_yml)
+
 def test_all_fasta_table():
     data_table_test(test_data / "EboVir3.fa",
                     data_table_name="all_fasta")
