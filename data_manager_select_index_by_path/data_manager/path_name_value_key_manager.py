@@ -140,6 +140,12 @@ class DataTable(object):
                             extension,
                             str(self.index_path.parent),
                             index_name))
+        elif self.index_properties.get('folder') is not None:
+            for file in self.index_properties.get('folder'):
+                if not (self.index_path / Path(file)).exists():
+                    raise FileNotFoundError(
+                        "A file named \'{0}\' was not found in \'{1}\'".format(
+                            file, str(self.index_path)))
         else:
             if not self.index_path.exists():
                 raise FileNotFoundError(

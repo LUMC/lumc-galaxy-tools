@@ -50,6 +50,7 @@ picard_indexes:
     - ".dict"
 rnastar_index2:
   name: "Star index"
+  prefix: False
   extra_columns:
     - with-gtf
   folder:
