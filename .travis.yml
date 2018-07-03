@@ -9,9 +9,7 @@ install:
 script:
   - flake8 data_manager_select_index_by_path/data_manager
   - yamllint $(git ls-files *.yml)
-  - >
-    planemo lint
-    data_manager_select_index_by_path/data_manager/data_manager_select_index_by_path.xml
+  - planemo shed_lint -r --tools
   - >
     pytest
     --cov-report xml
