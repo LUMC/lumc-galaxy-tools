@@ -7,6 +7,7 @@ import tempfile
 from pathlib import Path
 
 import pytest
+import yaml
 
 from path_name_value_key_manager import DataTable, check_tab, main
 
@@ -77,6 +78,27 @@ def test_application_star_index():
     assert (table['value'] == "KM034562.1")
     assert (table['dbkey'] == "G3683/KM034562.1/eboVir3")
     assert (table['with-gtf'] == '0')
+
+
+def test_application_star_index_fail_wrong_yaml():
+    with pytest.raises(yaml.parser.ParserError):
+        output_path = \
+            tempfile.mkstemp(".json", "star_indexes", TEST_OUTPUT_DIR)[
+                1]
+        # [1] Needed. mkstemp returns a tuple.
+        # The second value is the absolute path
+        os.remove(output_path)  # File may not exist.
+        index_path = test_data / Path("star_index")
+        sys.argv = ['',
+                    "--path", str(index_path),
+                    "--data_table_name", "rnastar_index2",
+                    "--name", "Ebola virus Sierra Leone 2014",
+                    "--dbkey", "G3683/KM034562.1/eboVir3",
+                    "--value", "KM034562.1",
+                    "--json_output_file", str(output_path),
+                    "--extra-columns", "{with-gtf: '0'{[]{x"
+                    ]
+        main()
 
 
 def test_check_tab():
