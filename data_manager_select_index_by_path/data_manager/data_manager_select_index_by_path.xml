@@ -37,13 +37,13 @@
                 <option value='picard_indexes'>picard_indexes</option>
                 <option value='tophat2_indexes'>tophat2_indexes</option>
                 <option value="rnastar_index2">rnastar_index2</option>
-                <when value="rnastar_index2">
-                    <param name="with_gtf" type="select" value="" label="Index with embedded gtf?">
-                        <option value="0">No</option>
-                        <option value="1">Yes</option>
-                    </param>
-                </when>
             </param>
+            <when value="rnastar_index2">
+                <param name="with_gtf" type="select" value="" label="Index with embedded gtf?">
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </param>
+            </when>
         </conditional>
     </inputs>
     <outputs>
