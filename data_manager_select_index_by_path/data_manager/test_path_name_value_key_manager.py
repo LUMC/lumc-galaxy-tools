@@ -60,19 +60,21 @@ def test_application_star_index():
     index_path = test_data / Path("star_index")
     sys.argv = ['',
                 "--path", str(index_path),
-                "--data_table_name", "rna_star_index2",
+                "--data_table_name", "rnastar_index2",
                 "--name", "Ebola virus Sierra Leone 2014",
-                "--dbkey", "G3683/KM034562.1/eboVir3"
-                "--value", "KM034562.1"
+                "--dbkey", "G3683/KM034562.1/eboVir3",
+                "--value", "KM034562.1",
                 "--json_output_file", str(output_path),
                 "--extra-columns", "{with-gtf: '0'}"
                 ]
     main()
-    data_manager_dict = json.load(Path(output_path).open())['fasta_indexes']
-    assert (data_manager_dict['path'] == str(index_path))
-    assert (data_manager_dict['name'] == "EboVir3")
-    assert (data_manager_dict['value'] == "EboVir3")
-    assert (data_manager_dict['dbkey'] == "EboVir3")
+    data_manager_dict = json.load(Path(output_path).open())
+    table = data_manager_dict["data_tables"]["rnastar_index2"][0]
+    assert (table['path'] == str(index_path))
+    assert (table['name'] == "Ebola virus Sierra Leone 2014")
+    assert (table['value'] == "KM034562.1")
+    assert (table['dbkey'] == "G3683/KM034562.1/eboVir3")
+    assert (table['with-gtf'] == '0')
 
 
 def test_check_tab():
@@ -106,12 +108,12 @@ def test_data_table():
     assert (dt.dbkey == "EboVir3")
     dm_json = json.loads(dt.data_manager_json)
     print(dm_json)
-    assert (dm_json['data_tables']['bwa_mem_indexes'][0] ==
+    assert (dm_json == {"data_tables" : {"bwa_mem_indexes" : [
             {"name": "EboVir3",
              "value": "EboVir3",
              "dbkey": "EboVir3",
              "path": str((
-                     test_data / "bwa_mem_index/EboVir3.fa"))})
+                     test_data / "bwa_mem_index/EboVir3.fa"))}]}})
 
 
 def test_non_existing_table():
