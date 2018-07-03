@@ -48,10 +48,10 @@ picard_indexes:
   extensions:
     - ".fa"
     - ".dict"
-rna_star_index2:
+rnastar_index2:
   name: "Star index"
   extra_columns:
-    - with_gtf
+    - with-gtf
   folder:
     - chrLength.txt
     - chrNameLength.txt

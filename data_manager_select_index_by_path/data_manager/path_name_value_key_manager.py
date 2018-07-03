@@ -93,7 +93,7 @@ class DataTable(object):
             if len(index_extra_columns) == 0:
                 raise ValueError(
                     "The table \'{0}\' does not have extra columns")
-        for key, value in self.extra_columns:
+        for key, value in self.extra_columns.items():
             check_tab(key, value)
 
     def get_index_properties(self) -> dict:
@@ -168,6 +168,14 @@ def main():
         raise FileExistsError(
             "\'{0}\' already exists.".format(str(options.json_output_file)))
 
+    if options.extra_columns is None:
+        extra_columns = dict()
+    else:
+        try:
+            extra_columns = yaml.safe_load(options.extra_columns)
+        except ValueError:
+            raise ValueError("Invalid yaml string for --extra_indexes")
+
     index_properties_file = Path(__file__).parent / Path("indexes.yml")
     data_table = DataTable(index_path=options.path,
                            data_table_name=options.data_table_name,
@@ -175,7 +183,7 @@ def main():
                            value=options.value,
                            dbkey=options.dbkey,
                            indexes_properties_file=index_properties_file,
-                           extra_columns=options.extra_columns)
+                           extra_columns=extra_columns)
 
     # save info to json file
     with options.json_output_file.open('w') as output_file:
