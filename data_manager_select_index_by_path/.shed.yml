@@ -15,6 +15,9 @@ long_description: |
     - Hisat2 index
     - Kallisto index
     - Picard index
+    - GATK sorted picard index
+    - bwameth index
+    - GTF file
     - Star index
     - Tophat2 index
 
@@ -24,6 +27,12 @@ long_description: |
   The all_fasta_by_path data manager was forked on 2017-09-07 from
   Christian-B's galaxy_shedtools repository at commit d9f5343.
   (https://github.com/Christian-B/galaxy_shedtools).
+
+  The tool has drastically changed since then, with a complete refactoring
+  of the python script and the addition of unit tests for all functionality
+  within the python script. A lot of indexes are now supported in addition to
+  just the all_fasta one.
+
 name: data_manager_select_index_by_path
 owner: rhpvorderman
 type: unrestricted
