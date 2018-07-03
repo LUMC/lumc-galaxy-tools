@@ -12,7 +12,7 @@ def argument_parser():
     parser.add_argument('--value', type=str, help='value')
     parser.add_argument('--dbkey', type=str, help='dbkey')
     parser.add_argument('--name', type=str, help='name')
-    parser.add_argument('--path', type=str, help='path',
+    parser.add_argument('--path', type=Path, help='path',
                         required=True)
     parser.add_argument('--data_table_name', action='store', type=str,
                         help='Name of the data table',
@@ -174,8 +174,9 @@ def main():
                            indexes_properties_file=index_properties_file,
                            extra_columns=options.extra_columns)
 
+
     # save info to json file
-    with open(options.json_output_file, 'w') as output_file:
+    with options.json_output_file.open('w') as output_file:
         output_file.write(data_table.data_manager_json)
 
 

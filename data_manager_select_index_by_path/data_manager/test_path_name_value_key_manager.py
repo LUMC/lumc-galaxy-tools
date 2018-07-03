@@ -1,18 +1,78 @@
 #!/usr/bin/env python3
 
-import pytest
 import json
+import os
+import sys
 import tempfile
 from pathlib import Path
 
+import pytest
+
 from path_name_value_key_manager import DataTable, check_tab, main
 
-TEST_OUTPUT_DIR = tempfile.mkdtemp(".d","tmp_data_manager_select_index_by_path")
+TEST_OUTPUT_DIR = tempfile.mkdtemp(".d",
+                                   "tmp_data_manager_select_index_by_path")
 
 indexes_yml = Path(__file__).parent / Path("indexes.yml")
 test_data = Path(__file__).parent.parent / Path("test-data")
 
 
+def test_application():
+    output_path = tempfile.mkstemp(".json", "fasta_indexes", TEST_OUTPUT_DIR)[
+        1]
+    # [1] Needed. mkstemp returns a tuple.
+    # The second value is the absolute path
+    os.remove(output_path)  # File may not exist.
+    index_path = test_data / Path("fasta_indexes/EboVir3.fa")
+    sys.argv = ['',
+                "--path", str(index_path),
+                "--data_table_name", "fasta_indexes",
+                "--json_output_file", str(output_path)
+                ]
+    main()
+    data_manager_dict = json.load(Path(output_path).open())['fasta_indexes']
+    assert (data_manager_dict['path'] == str(index_path))
+    assert (data_manager_dict['name'] == "EboVir3")
+    assert (data_manager_dict['value'] == "EboVir3")
+    assert (data_manager_dict['dbkey'] == "EboVir3")
+
+
+def test_application_fail_file_exists():
+    with pytest.raises(FileExistsError):
+        output_path = \
+        tempfile.mkstemp(".json", "fasta_indexes", TEST_OUTPUT_DIR)[1]
+        # [1] Needed. mkstemp returns a tuple.
+        # The second value is the absolute path
+        index_path = test_data / Path("fasta_indexes/EboVir3.fa")
+        sys.argv = ['',
+                    "--path", str(index_path),
+                    "--data_table_name", "fasta_indexes",
+                    "--json_output_file", str(output_path)
+                    ]
+        main()
+
+def test_application_star_index():
+    output_path = tempfile.mkstemp(".json", "star_indexes", TEST_OUTPUT_DIR)[
+        1]
+    # [1] Needed. mkstemp returns a tuple.
+    # The second value is the absolute path
+    os.remove(output_path)  # File may not exist.
+    index_path = test_data / Path("star_index")
+    sys.argv = ['',
+                "--path", str(index_path),
+                "--data_table_name", "rna_star_index2",
+                "--name", "Ebola virus Sierra Leone 2014",
+                "--dbkey", "G3683/KM034562.1/eboVir3"
+                "--value", "KM034562.1"
+                "--json_output_file", str(output_path),
+                "--extra-columns", "{with-gtf: '0'}"
+                ]
+    main()
+    data_manager_dict = json.load(Path(output_path).open())['fasta_indexes']
+    assert (data_manager_dict['path'] == str(index_path))
+    assert (data_manager_dict['name'] == "EboVir3")
+    assert (data_manager_dict['value'] == "EboVir3")
+    assert (data_manager_dict['dbkey'] == "EboVir3")
 def test_check_tab():
     check_tab("test", "This text does not contain a tab and succeeds")
 
