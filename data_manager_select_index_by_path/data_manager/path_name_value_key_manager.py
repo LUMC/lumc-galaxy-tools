@@ -135,7 +135,7 @@ class DataTable(object):
                     raise FileNotFoundError(
                         'Unable to find files with prefix \'{0}\' '
                         'and extension \'{1}\' in {2}. Is this a valid {3}?'
-                            .format(
+                        .format(
                             prefix,
                             extension,
                             str(self.index_path.parent),

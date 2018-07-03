@@ -30,7 +30,8 @@ def test_application():
                 "--json_output_file", str(output_path)
                 ]
     main()
-    data_manager_dict = json.load(Path(output_path).open())["data_tables"]['fasta_indexes'][0]
+    data_manager_dict = \
+        json.load(Path(output_path).open())["data_tables"]['fasta_indexes'][0]
     assert (data_manager_dict['path'] == str(index_path))
     assert (data_manager_dict['name'] == "EboVir3")
     assert (data_manager_dict['value'] == "EboVir3")
@@ -40,7 +41,7 @@ def test_application():
 def test_application_fail_file_exists():
     with pytest.raises(FileExistsError):
         output_path = \
-        tempfile.mkstemp(".json", "fasta_indexes", TEST_OUTPUT_DIR)[1]
+            tempfile.mkstemp(".json", "fasta_indexes", TEST_OUTPUT_DIR)[1]
         # [1] Needed. mkstemp returns a tuple.
         # The second value is the absolute path
         index_path = test_data / Path("fasta_indexes/EboVir3.fa")
@@ -50,6 +51,7 @@ def test_application_fail_file_exists():
                     "--json_output_file", str(output_path)
                     ]
         main()
+
 
 def test_application_star_index():
     output_path = tempfile.mkstemp(".json", "star_indexes", TEST_OUTPUT_DIR)[
@@ -95,7 +97,8 @@ def data_table_test(index_path: Path,
                    indexes_properties_file=indexes_yml)
     data_manager_dict = dt.data_manager_dict
     assert (data_manager_dict["data_tables"].get(data_table_name) is not None)
-    assert (data_manager_dict["data_tables"].get(data_table_name)[0].get("path") == str(
+    assert (data_manager_dict["data_tables"].get(data_table_name)[0].get(
+        "path") == str(
         index_path))
 
 
@@ -108,12 +111,12 @@ def test_data_table():
     assert (dt.dbkey == "EboVir3")
     dm_json = json.loads(dt.data_manager_json)
     print(dm_json)
-    assert (dm_json == {"data_tables" : {"bwa_mem_indexes" : [
-            {"name": "EboVir3",
-             "value": "EboVir3",
-             "dbkey": "EboVir3",
-             "path": str((
-                     test_data / "bwa_mem_index/EboVir3.fa"))}]}})
+    assert (dm_json == {"data_tables": {"bwa_mem_indexes": [
+        {"name": "EboVir3",
+         "value": "EboVir3",
+         "dbkey": "EboVir3",
+         "path": str((
+                 test_data / "bwa_mem_index/EboVir3.fa"))}]}})
 
 
 def test_non_existing_table():
@@ -124,18 +127,22 @@ def test_non_existing_table():
 
 
 def test_rnastar_index_fail_no_extra_column():
-    with pytest.raises(ValueError, match="Values for the following columns should be supplied: 'with-gtf'."):
+    with pytest.raises(ValueError,
+                       match="Values for the following columns "
+                             "should be supplied: 'with-gtf'."):
         data_table_test(
             index_path=test_data / "star_index",
             data_table_name="rnastar_index2")
+
 
 def test_rnastar_index_fail_wrong_dir():
     with pytest.raises(FileNotFoundError):
         DataTable(
             index_path=test_data / "picard_index",
             data_table_name="rnastar_index2",
-            extra_columns={'with-gtf':'0'},
+            extra_columns={'with-gtf': '0'},
             indexes_properties_file=indexes_yml)
+
 
 def test_all_fasta_table():
     data_table_test(test_data / "EboVir3.fa",
@@ -156,7 +163,8 @@ def test_bowtie2_index():
 
 def test_bowtie2_index_fail():
     with pytest.raises(FileNotFoundError,
-                       match="Unable to find files with prefix \'EboVir3.fa\'"):
+                       match="Unable to find files "
+                             "with prefix \'EboVir3.fa\'"):
         data_table_test(
             index_path=test_data / "bowtie2_index/EboVir3.fa",
             data_table_name="bowtie2_indexes")
