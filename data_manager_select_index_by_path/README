@@ -1,2 +1,11 @@
-This is a fork of the data_manager_all_fasta_by_path (https://github.com/Christian-B/galaxy_shedtools/tree/master/all_fasta_by_path) data manager by Cristian-B(https://github.com/Christian-B).
-The all_fasta_by_path data manager was forked on 2017-09-07 from Christian-B's galaxy_shedtools (https://github.com/Christian-B/galaxy_shedtools) repository at commit d9f5343.
+This is a fork of the data_manager_all_fasta_by_path data manager
+by Cristian-B (https://github.com/Christian-B)
+(https://github.com/Christian-B/galaxy_shedtools/tree/master/all_fasta_by_path).
+The all_fasta_by_path data manager was forked on 2017-09-07 from
+Christian-B's galaxy_shedtools repository at commit d9f5343.
+(https://github.com/Christian-B/galaxy_shedtools).
+
+The tool has drastically changed since then, with a complete refactoring
+of the python script and the addition of unit tests for all functionality
+within the python script. A lot of indexes are now supported in addition to
+just the all_fasta one.
