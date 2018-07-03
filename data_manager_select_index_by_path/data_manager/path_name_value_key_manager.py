@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""Script to create data manager jsons"""
 
 import argparse
 import json
@@ -101,7 +102,8 @@ class DataTable(object):
         index_properties = indexes.get(self.data_table_name)
         if index_properties is None:
             raise ValueError(
-                "\'{0}\' not a supported table name".format(self.data_table_name))
+                "\'{0}\' not a supported table name".format(
+                    self.data_table_name))
         return index_properties
 
     def check_index_file_presence(self):
@@ -133,7 +135,7 @@ class DataTable(object):
                     raise FileNotFoundError(
                         'Unable to find files with prefix \'{0}\' '
                         'and extension \'{1}\' in {2}. Is this a valid {3}?'
-                        .format(
+                            .format(
                             prefix,
                             extension,
                             str(self.index_path.parent),
@@ -149,8 +151,9 @@ class DataTable(object):
                                 name=self.name,
                                 path=str(self.index_path),
                                 **self.extra_columns)
-        data_manager_dict = dict()
-        data_manager_dict[self.data_table_name] = data_table_entry
+        data_manager_dict = dict(data_tables=dict())
+        data_manager_dict["data_tables"][
+            self.data_table_name] = [data_table_entry]
         return data_manager_dict
 
     @property
@@ -173,7 +176,6 @@ def main():
                            dbkey=options.dbkey,
                            indexes_properties_file=index_properties_file,
                            extra_columns=options.extra_columns)
-
 
     # save info to json file
     with options.json_output_file.open('w') as output_file:

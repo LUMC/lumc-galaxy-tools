@@ -30,7 +30,7 @@ def test_application():
                 "--json_output_file", str(output_path)
                 ]
     main()
-    data_manager_dict = json.load(Path(output_path).open())['fasta_indexes']
+    data_manager_dict = json.load(Path(output_path).open())["data_tables"]['fasta_indexes'][0]
     assert (data_manager_dict['path'] == str(index_path))
     assert (data_manager_dict['name'] == "EboVir3")
     assert (data_manager_dict['value'] == "EboVir3")
@@ -73,6 +73,8 @@ def test_application_star_index():
     assert (data_manager_dict['name'] == "EboVir3")
     assert (data_manager_dict['value'] == "EboVir3")
     assert (data_manager_dict['dbkey'] == "EboVir3")
+
+
 def test_check_tab():
     check_tab("test", "This text does not contain a tab and succeeds")
 
@@ -90,8 +92,8 @@ def data_table_test(index_path: Path,
                    data_table_name=data_table_name,
                    indexes_properties_file=indexes_yml)
     data_manager_dict = dt.data_manager_dict
-    assert (data_manager_dict.get(data_table_name) is not None)
-    assert (data_manager_dict.get(data_table_name).get("path") == str(
+    assert (data_manager_dict["data_tables"].get(data_table_name) is not None)
+    assert (data_manager_dict["data_tables"].get(data_table_name)[0].get("path") == str(
         index_path))
 
 
@@ -104,7 +106,7 @@ def test_data_table():
     assert (dt.dbkey == "EboVir3")
     dm_json = json.loads(dt.data_manager_json)
     print(dm_json)
-    assert (dm_json['bwa_mem_indexes'] ==
+    assert (dm_json['data_tables']['bwa_mem_indexes'][0] ==
             {"name": "EboVir3",
              "value": "EboVir3",
              "dbkey": "EboVir3",
