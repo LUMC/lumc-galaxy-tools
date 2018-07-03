@@ -144,6 +144,17 @@ def test_rnastar_index_fail_wrong_dir():
             indexes_properties_file=indexes_yml)
 
 
+def test_all_fasta_table_fail_extra_columns():
+    with pytest.raises(ValueError,
+                       match="The table 'all_fasta' "
+                             "does not have extra columns"):
+        DataTable(
+            index_path=test_data / "EboVir3.fa",
+            data_table_name="all_fasta",
+            extra_columns={'with-gtf': '0'},
+            indexes_properties_file=indexes_yml)
+
+
 def test_all_fasta_table():
     data_table_test(test_data / "EboVir3.fa",
                     data_table_name="all_fasta")

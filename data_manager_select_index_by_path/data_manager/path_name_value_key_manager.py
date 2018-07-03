@@ -92,7 +92,8 @@ class DataTable(object):
                         str(index_extra_columns).strip("{}")))
             if len(index_extra_columns) == 0:
                 raise ValueError(
-                    "The table \'{0}\' does not have extra columns")
+                    "The table \'{0}\' does not have extra columns".format(
+                        self.data_table_name))
         for key, value in self.extra_columns.items():
             check_tab(key, value)
 
