@@ -178,8 +178,10 @@ def main():
     else:
         try:
             extra_columns = yaml.safe_load(options.extra_columns)
-        except ValueError:
-            raise ValueError("Invalid yaml string for --extra_indexes")
+        except yaml.parser.ParserError as e:
+            raise yaml.parser.ParserError(
+                "Invalid yaml string for --extra_indexes. \nError {0}".format(
+                    e))
 
     index_properties_file = Path(__file__).parent / Path("indexes.yml")
     data_table = DataTable(index_path=options.path,
