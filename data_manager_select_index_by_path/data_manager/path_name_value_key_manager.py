@@ -107,11 +107,9 @@ class DataTable(object):
         return index_properties
 
     def check_index_file_presence(self):
-        index_name = self.index_properties.get('name')
-        if index_name is None:
-            raise ValueError(
-                "Property \'name\' not defined for \'{0}\',"
-                " please contact the developers to correct the mistake.")
+        index_name = self.index_properties.get(
+            'name',
+            '[Index name not found. Please report to developers]')
         index_extensions = self.index_properties.get('extensions', [''])
 
         # Sometimes an index path is a prefix.
