@@ -10,8 +10,8 @@
         --dbkey "${dbkey}"
         --name "${name}"
         --path "${path}"
-        --data_table_name "${data_table}"
-        --json_output_file "${json_output_file}
+        --data_table_name "${data_table_set.data_table}"
+        --json_output_file "${json_output_file}"
         #if $data_table_set.data_table == "rnastar_index2"
         --extra-columns {'with-gtf': '$data_table_set.with_gtf'}
         #end if
