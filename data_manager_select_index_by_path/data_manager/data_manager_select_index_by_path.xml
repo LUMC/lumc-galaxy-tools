@@ -5,7 +5,7 @@
         <requirement type="package">pyyaml</requirement>
     </requirements>
     <description>path inputer</description>
-    <command detect_errors="exit_code" interpreter="python3">
+    <command detect_errors="exit_code"><![CDATA[
         path_name_value_key_manager.py
         --value "${value}"
         --dbkey "${dbkey}"
@@ -16,7 +16,7 @@
         #if $data_table_set.data_table == "rnastar_index2"
         --extra-columns {'with-gtf': '$data_table_set.with_gtf'}
         #end if
-    </command>
+        ]]></command>
     <inputs>
         <param name="value" type="text" value="" label="value field for the entry.  Defaults to name if left blank." />
         <param name="dbkey" type="text" value="" label="dbkey field for the entry.  Defaults to value if left blank." />
