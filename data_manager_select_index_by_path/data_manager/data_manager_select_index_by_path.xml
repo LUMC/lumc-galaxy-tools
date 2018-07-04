@@ -2,9 +2,10 @@
     <requirements>
         <!-- Away with python 2! -->
         <requirement type="package" version="3.5">python</requirement>
+        <requirement type="package">pyyaml</requirement>
     </requirements>
     <description>path inputer</description>
-    <command detect_errors="exit_code" interpreter="python">
+    <command detect_errors="exit_code" interpreter="python3">
         path_name_value_key_manager.py
         --value "${value}"
         --dbkey "${dbkey}"
