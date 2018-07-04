@@ -6,7 +6,7 @@
     </requirements>
     <description>path inputer</description>
     <command detect_errors="exit_code"><![CDATA[
-        path_name_value_key_manager.py
+        python $__tool_directory__/path_name_value_key_manager.py
         --value "${value}"
         --dbkey "${dbkey}"
         --name "${name}"
