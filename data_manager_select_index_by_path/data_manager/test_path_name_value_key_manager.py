@@ -39,19 +39,26 @@ def test_application():
     assert (data_manager_dict['dbkey'] == "EboVir3")
 
 
-def test_application_fail_file_exists():
-    with pytest.raises(FileExistsError):
-        output_path = \
-            tempfile.mkstemp(".json", "fasta_indexes", TEST_OUTPUT_DIR)[1]
-        # [1] Needed. mkstemp returns a tuple.
-        # The second value is the absolute path
-        index_path = test_data / Path("fasta_indexes/EboVir3.fa")
-        sys.argv = ['',
-                    "--path", str(index_path),
-                    "--data_table_name", "fasta_indexes",
-                    "--json_output_file", str(output_path)
-                    ]
-        main()
+def test_application_overwrite_file():
+
+    output_path = \
+        tempfile.mkstemp(".json", "fasta_indexes", TEST_OUTPUT_DIR)[1]
+    Path(output_path).write_text("bla invalid json")
+    # [1] Needed. mkstemp returns a tuple.
+    # The second value is the absolute path
+    index_path = test_data / Path("fasta_indexes/EboVir3.fa")
+    sys.argv = ['',
+                "--path", str(index_path),
+                "--data_table_name", "fasta_indexes",
+                "--json_output_file", str(output_path)
+                ]
+    main()
+    data_manager_dict = \
+        json.load(Path(output_path).open())["data_tables"]['fasta_indexes'][0]
+    assert (data_manager_dict['path'] == str(index_path))
+    assert (data_manager_dict['name'] == "EboVir3")
+    assert (data_manager_dict['value'] == "EboVir3")
+    assert (data_manager_dict['dbkey'] == "EboVir3")
 
 
 def test_application_star_index():

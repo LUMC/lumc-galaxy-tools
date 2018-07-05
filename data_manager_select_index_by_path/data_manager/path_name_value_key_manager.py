@@ -170,8 +170,7 @@ def main():
     options = argument_parser().parse_args()
 
     if options.json_output_file.exists():
-        raise FileExistsError(
-            "\'{0}\' already exists.".format(str(options.json_output_file)))
+        pass # Do not raise error.
 
     if options.extra_columns is None:
         extra_columns = dict()
