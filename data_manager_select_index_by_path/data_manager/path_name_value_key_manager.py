@@ -170,7 +170,7 @@ def main():
     options = argument_parser().parse_args()
 
     if options.json_output_file.exists():
-        pass # Do not raise error.
+        pass  # Do not raise error.
 
     if options.extra_columns is None:
         extra_columns = dict()
