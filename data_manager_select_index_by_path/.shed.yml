@@ -4,6 +4,8 @@ description:
   A data manager to register already build indexes in Galaxy's data tables
 remote_repository_url:
   https://github.com/LUMC/lumc-galaxy-tools/tree/master/data_manager_select_index_by_path
+homepage_url:
+  https://github.com/LUMC/lumc-galaxy-tools
 long_description: |
   This tool can link galaxy to already built indexes on the filesystem.
   This tool currently supports the following formats:
