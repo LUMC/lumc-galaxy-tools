@@ -61,8 +61,8 @@ class DataTable(object):
         self.data_table_name = data_table_name
         self.name = name if name else str(self.index_path.with_suffix(
             '').name)
-        self.value = value if value is not None else self.name
-        self.dbkey = dbkey if dbkey is not None else self.value
+        self.value = value if value else self.name
+        self.dbkey = dbkey if dbkey else self.value
         self.extra_columns = extra_columns if extra_columns is not None else {}
         self.indexes_properties_file = indexes_properties_file
 
