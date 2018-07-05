@@ -1,4 +1,4 @@
-<tool id="data_manager_select_index_by_path" name="Select index by path manager" tool_type="manage_data" version="0.0.3">
+<tool id="data_manager_select_index_by_path" name="Select index by path manager" tool_type="manage_data" version="0.0.3" profile="18.09">
     <requirements>
         <!-- Away with python 2! -->
         <requirement type="package" version="3.5">python</requirement>
