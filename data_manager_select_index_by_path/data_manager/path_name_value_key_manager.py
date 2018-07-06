@@ -31,8 +31,8 @@ def argument_parser():
 def check_tab(name: str, value: str):
     if '\t' in value:
         raise ValueError(
-            '\'{0}\' is not a valid \'{1}\'. It may not contain a tab because '
-            'these are used as seperators by galaxy .'.format(
+            "'{0}' is not a valid '{1}'. It may not contain a tab because "
+            "these are used as seperators by galaxy .".format(
                 value, name))
 
 
@@ -92,7 +92,7 @@ class DataTable(object):
                         str(index_extra_columns).strip("{}")))
             if len(index_extra_columns) == 0:
                 raise ValueError(
-                    "The table \'{0}\' does not have extra columns".format(
+                    "The table '{0}' does not have extra columns".format(
                         self.data_table_name))
         for key, value in self.extra_columns.items():
             check_tab(key, value)
@@ -103,7 +103,7 @@ class DataTable(object):
         index_properties = indexes.get(self.data_table_name)
         if index_properties is None:
             raise ValueError(
-                "\'{0}\' not a supported table name".format(
+                "'{0}' not a supported table name".format(
                     self.data_table_name))
         return index_properties
 
@@ -132,8 +132,8 @@ class DataTable(object):
                 if not prefix_plus_extension_exists(self.index_path.parent,
                                                     prefix, extension):
                     raise FileNotFoundError(
-                        'Unable to find files with prefix \'{0}\' '
-                        'and extension \'{1}\' in {2}. Is this a valid {3}?'
+                        "Unable to find files with prefix '{0}' "
+                        "and extension '{1}' in {2}. Is this a valid {3}?"
                         .format(
                             prefix,
                             extension,
@@ -143,12 +143,19 @@ class DataTable(object):
             for file in self.index_properties.get('folder'):
                 if not (self.index_path / Path(file)).exists():
                     raise FileNotFoundError(
-                        "A file named \'{0}\' was not found in \'{1}\'".format(
+                        "A file named '{0}' was not found in '{1}'".format(
                             file, str(self.index_path)))
+        elif not self.index_path.exists() and not self.index_path.is_dir():
+            raise FileNotFoundError(
+                'Unable to find path {0}.'.format(self.index_path))
+        elif self.index_path.is_dir() and self.index_properties.get(
+                'folder') is None:
+            raise IsADirectoryError(
+                '{0} is a directory not a file'.format(self.index_path))
         else:
-            if not self.index_path.exists():
-                raise FileNotFoundError(
-                    'Unable to find path {0}.'.format(self.index_path))
+            raise NotImplementedError("This condition was not expected "
+                                      "and should not be reached. Please "
+                                      "contact the developers.")
 
     @property
     def data_manager_dict(self) -> dict:

@@ -1,7 +1,7 @@
 ---
 categories: [Data Managers]
 description:
-  A data manager to register already build indexes in Galaxy's data tables
+  A data manager to register already built indexes in Galaxy's data tables
 remote_repository_url:
   https://github.com/LUMC/lumc-galaxy-tools/tree/master/data_manager_select_index_by_path
 homepage_url:
