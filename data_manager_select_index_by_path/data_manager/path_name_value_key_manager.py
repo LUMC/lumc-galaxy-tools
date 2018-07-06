@@ -154,6 +154,8 @@ class DataTable(object):
                 'folder') is None:
             raise IsADirectoryError(
                 '{0} is a directory not a file'.format(self.index_path))
+        elif self.index_path.exists():
+            pass
         else:
             raise NotImplementedError("This condition was not expected "
                                       "and should not be reached. Please "
