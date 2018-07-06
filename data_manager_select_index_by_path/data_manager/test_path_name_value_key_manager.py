@@ -18,9 +18,15 @@ indexes_yml = Path(__file__).parent / Path("indexes.yml")
 test_data = Path(__file__).parent.parent / Path("test-data")
 
 
+@pytest.fixture
+def temp_json_path():
+    with tempfile.NamedTemporaryFile(suffix=".json", dir =TEST_OUTPUT_DIR) as tmp:
+        path = tmp.name
+    yield path
+    os.remove(path)
+
 def test_application():
-    output_path = tempfile.mkstemp(".json", "fasta_indexes", TEST_OUTPUT_DIR)[
-        1]
+    output_path = temp_json_path()
     # [1] Needed. mkstemp returns a tuple.
     # The second value is the absolute path
     os.remove(output_path)  # File may not exist.
@@ -41,8 +47,7 @@ def test_application():
 
 def test_application_overwrite_file():
 
-    output_path = \
-        tempfile.mkstemp(".json", "fasta_indexes", TEST_OUTPUT_DIR)[1]
+    output_path = temp_json_path()
     Path(output_path).write_text("bla invalid json")
     # [1] Needed. mkstemp returns a tuple.
     # The second value is the absolute path
@@ -62,8 +67,7 @@ def test_application_overwrite_file():
 
 
 def test_application_star_index():
-    output_path = tempfile.mkstemp(".json", "star_indexes", TEST_OUTPUT_DIR)[
-        1]
+    output_path = temp_json_path()
     # [1] Needed. mkstemp returns a tuple.
     # The second value is the absolute path
     os.remove(output_path)  # File may not exist.
@@ -89,9 +93,7 @@ def test_application_star_index():
 
 def test_application_star_index_fail_wrong_yaml():
     with pytest.raises(yaml.parser.ParserError):
-        output_path = \
-            tempfile.mkstemp(".json", "star_indexes", TEST_OUTPUT_DIR)[
-                1]
+        output_path = temp_json_path()
         # [1] Needed. mkstemp returns a tuple.
         # The second value is the absolute path
         os.remove(output_path)  # File may not exist.
