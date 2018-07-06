@@ -191,6 +191,12 @@ def test_index_path_not_exist():
                         data_table_name="all_fasta")
 
 
+def test_index_path_is_a_dir():
+    with pytest.raises(IsADirectoryError, match="is a directory not a file"):
+        data_table_test(test_data / "fasta_indexes",
+                        data_table_name="all_fasta")
+
+
 def test_bowtie2_index():
     data_table_test(
         index_path=test_data / "bowtie2_index/EboVir3",
