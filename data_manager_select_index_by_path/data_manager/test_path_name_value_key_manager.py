@@ -26,48 +26,74 @@ def temp_json_path():
         # [1] Needed. mkstemp returns a tuple.
         # The second value is the absolute path
     yield path
-    os.remove(path)
+    try:
+        os.remove(path)
+    except FileNotFoundError:
+        pass  # Do not fail if there is nothing to remove
 
 
-def test_application():
-    for output_path in temp_json_path():
-        index_path = test_data / Path("fasta_indexes/EboVir3.fa")
-        sys.argv = ['',
-                    "--path", str(index_path),
-                    "--data_table_name", "fasta_indexes",
-                    "--json_output_file", str(output_path)
-                    ]
-        main()
-        data_manager_dict = \
-            json.load(Path(output_path).open())["data_tables"][
-                'fasta_indexes'][0]
-        assert (data_manager_dict['path'] == str(index_path))
-        assert (data_manager_dict['name'] == "EboVir3")
-        assert (data_manager_dict['value'] == "EboVir3")
-        assert (data_manager_dict['dbkey'] == "EboVir3")
+def test_application(temp_json_path):
+    output_path = temp_json_path
+    index_path = test_data / Path("fasta_indexes/EboVir3.fa")
+    sys.argv = ['',
+                "--path", str(index_path),
+                "--data_table_name", "fasta_indexes",
+                "--json_output_file", str(output_path)
+                ]
+    main()
+    data_manager_dict = \
+        json.load(Path(output_path).open())["data_tables"][
+            'fasta_indexes'][0]
+    assert (data_manager_dict['path'] == str(index_path))
+    assert (data_manager_dict['name'] == "EboVir3")
+    assert (data_manager_dict['value'] == "EboVir3")
+    assert (data_manager_dict['dbkey'] == "EboVir3")
 
 
-def test_application_overwrite_file():
-    for output_path in temp_json_path():
-        Path(output_path).write_text("bla invalid json")
-        index_path = test_data / Path("fasta_indexes/EboVir3.fa")
-        sys.argv = ['',
-                    "--path", str(index_path),
-                    "--data_table_name", "fasta_indexes",
-                    "--json_output_file", str(output_path)
-                    ]
-        main()
-        data_manager_dict = \
-            json.load(Path(output_path).open())["data_tables"][
-                'fasta_indexes'][0]
-        assert (data_manager_dict['path'] == str(index_path))
-        assert (data_manager_dict['name'] == "EboVir3")
-        assert (data_manager_dict['value'] == "EboVir3")
-        assert (data_manager_dict['dbkey'] == "EboVir3")
+def test_application_overwrite_file(temp_json_path):
+    output_path = temp_json_path
+    Path(output_path).write_text("bla invalid json")
+    index_path = test_data / Path("fasta_indexes/EboVir3.fa")
+    sys.argv = ['',
+                "--path", str(index_path),
+                "--data_table_name", "fasta_indexes",
+                "--json_output_file", str(output_path)
+                ]
+    main()
+    data_manager_dict = \
+        json.load(Path(output_path).open())["data_tables"][
+            'fasta_indexes'][0]
+    assert (data_manager_dict['path'] == str(index_path))
+    assert (data_manager_dict['name'] == "EboVir3")
+    assert (data_manager_dict['value'] == "EboVir3")
+    assert (data_manager_dict['dbkey'] == "EboVir3")
 
 
-def test_application_star_index():
-    for output_path in temp_json_path():
+def test_application_star_index(temp_json_path):
+    output_path = temp_json_path
+    index_path = test_data / Path("star_index")
+    sys.argv = ['',
+                "--path", str(index_path),
+                "--data_table_name", "rnastar_index2",
+                "--name", "Ebola virus Sierra Leone 2014",
+                "--dbkey", "G3683/KM034562.1/eboVir3",
+                "--value", "KM034562.1",
+                "--json_output_file", str(output_path),
+                "--extra-columns", "{with-gtf: '0'}"
+                ]
+    main()
+    data_manager_dict = json.load(Path(output_path).open())
+    table = data_manager_dict["data_tables"]["rnastar_index2"][0]
+    assert (table['path'] == str(index_path))
+    assert (table['name'] == "Ebola virus Sierra Leone 2014")
+    assert (table['value'] == "KM034562.1")
+    assert (table['dbkey'] == "G3683/KM034562.1/eboVir3")
+    assert (table['with-gtf'] == '0')
+
+
+def test_application_star_index_fail_wrong_yaml(temp_json_path):
+    with pytest.raises(yaml.parser.ParserError):
+        output_path = temp_json_path
         index_path = test_data / Path("star_index")
         sys.argv = ['',
                     "--path", str(index_path),
@@ -76,32 +102,9 @@ def test_application_star_index():
                     "--dbkey", "G3683/KM034562.1/eboVir3",
                     "--value", "KM034562.1",
                     "--json_output_file", str(output_path),
-                    "--extra-columns", "{with-gtf: '0'}"
+                    "--extra-columns", "{with-gtf: '0'{[]{x"
                     ]
         main()
-        data_manager_dict = json.load(Path(output_path).open())
-        table = data_manager_dict["data_tables"]["rnastar_index2"][0]
-        assert (table['path'] == str(index_path))
-        assert (table['name'] == "Ebola virus Sierra Leone 2014")
-        assert (table['value'] == "KM034562.1")
-        assert (table['dbkey'] == "G3683/KM034562.1/eboVir3")
-        assert (table['with-gtf'] == '0')
-
-
-def test_application_star_index_fail_wrong_yaml():
-    with pytest.raises(yaml.parser.ParserError):
-        for output_path in temp_json_path():
-            index_path = test_data / Path("star_index")
-            sys.argv = ['',
-                        "--path", str(index_path),
-                        "--data_table_name", "rnastar_index2",
-                        "--name", "Ebola virus Sierra Leone 2014",
-                        "--dbkey", "G3683/KM034562.1/eboVir3",
-                        "--value", "KM034562.1",
-                        "--json_output_file", str(output_path),
-                        "--extra-columns", "{with-gtf: '0'{[]{x"
-                        ]
-            main()
 
 
 def test_check_tab():
