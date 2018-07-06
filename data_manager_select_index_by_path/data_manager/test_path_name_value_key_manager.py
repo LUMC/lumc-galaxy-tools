@@ -20,12 +20,14 @@ test_data = Path(__file__).parent.parent / Path("test-data")
 
 @pytest.fixture
 def temp_json_path():
-    with tempfile.NamedTemporaryFile(suffix=".json", dir =TEST_OUTPUT_DIR) as tmp:
+    with tempfile.NamedTemporaryFile(suffix=".json",
+                                     dir=TEST_OUTPUT_DIR) as tmp:
         path = tmp.name
         # [1] Needed. mkstemp returns a tuple.
         # The second value is the absolute path
     yield path
     os.remove(path)
+
 
 def test_application():
     for output_path in temp_json_path():
@@ -37,7 +39,8 @@ def test_application():
                     ]
         main()
         data_manager_dict = \
-            json.load(Path(output_path).open())["data_tables"]['fasta_indexes'][0]
+            json.load(Path(output_path).open())["data_tables"][
+                'fasta_indexes'][0]
         assert (data_manager_dict['path'] == str(index_path))
         assert (data_manager_dict['name'] == "EboVir3")
         assert (data_manager_dict['value'] == "EboVir3")
@@ -55,7 +58,8 @@ def test_application_overwrite_file():
                     ]
         main()
         data_manager_dict = \
-            json.load(Path(output_path).open())["data_tables"]['fasta_indexes'][0]
+            json.load(Path(output_path).open())["data_tables"][
+                'fasta_indexes'][0]
         assert (data_manager_dict['path'] == str(index_path))
         assert (data_manager_dict['name'] == "EboVir3")
         assert (data_manager_dict['value'] == "EboVir3")
