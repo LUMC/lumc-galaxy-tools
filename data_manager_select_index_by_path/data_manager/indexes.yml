@@ -1,20 +1,63 @@
+---
+# This file contains information about all the indexes.
+#
+# Top keys are table names as used in Galaxy.
+# These names can be viewed in the 'local data' part of the admin menu
+#
+# Keys for each table
+#  name:
+#    (STRING) The name of the index.
+#    This is used for error reporting in the program
+#
+#  prefix:
+#    (BOOLEAN) whether the index is a prefix. For example
+#    for bwa_mem-indexes, the index path is 'reference.fa'.
+#    This is a prefix because all the reference files are:
+#    'reference.fa.amb', 'reference.fa.ann' etc.
+#
+#  prefix_strip_extension:
+#    (BOOLEAN) whether the prefix should be stripped
+#    of its extensions. Ie from 'reference.fa' to
+#    'reference'. For a picard index also a 'reference.dict'
+#    should be present, so the prefix needs to be stripped of
+#    its extension to look for the index files.
+#
+#  extensions:
+#    (LIST[STRING]) a list of strings with the extensions:
+#      for example:
+#      extensions:
+#        - .fai
+#
+#  folder:
+#    (LIST[STRING]) Use this when the index is not a prefix but a folder
+#    the program will check if all the files in the list are present.
+#    If they are not, an exception will follow.
+#
+#  extra_columns:
+#    (LIST[STRING]) Usual indexes have 4 columns in the data table: path, name,
+#    value, dbkey. But some indexes have additional columns. rnastar_index2
+#    needs a 'with-gtf' column for instance. Add these columns to the list to
+#    make sure their presence, or non-presence is checked.
+
 all_fasta:
   name: fasta file
-  extensions:
-    - .fa
-  prefix: False
+  prefix: false
+
 bowtie2_indexes:
   name: bowtie2 index
   extensions:
     - .bt2
+
 bowtie_indexes:
   name: bowtie index
   extensions:
     - .ebwt
+
 bowtie_indexes_color:
   name: bowtie color index
   extensions:
     - .ebwt
+
 bwa_mem_indexes:
   name: bwa mem index
   extensions:
@@ -23,31 +66,53 @@ bwa_mem_indexes:
     - .bwt
     - .pac
     - .sa
+
 bwameth_indexes:
   name: bwa_meth_index
 fasta_indexes:
   name: fasta index
   extensions:
     - .fai
+
 gatk_picard_index:
   name: picard index for GATK
+
 gene_transfer:
   name: Gene Transfer File
   extensions:
     - .gtf
+
 hisat2_indexes:
   name: hisat2 index
   extensions:
     - .ht2
+
 kallisto_indexes:
   name: kallisto index
-  prefix: False
+  prefix: false
+
 picard_indexes:
   name: picard index
-  prefix_strip_extension: True
+  prefix_strip_extension: true
   extensions:
     - ".fa"
     - ".dict"
+
+rnastar_index2:
+  name: "Star index"
+  prefix: false
+  extra_columns:
+    - with-gtf
+  folder:
+    - chrLength.txt
+    - chrNameLength.txt
+    - chrStart.txt
+    - chrName.txt
+    - Genome
+    - SA
+    - SAindex
+    - genomeParameters.txt
+
 tophat2_indexes:
   name: tophat2 index
   extensions:

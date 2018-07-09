@@ -1,3 +1,4 @@
+---
 language: python
 sudo: false
 python:
@@ -7,5 +8,11 @@ install:
   - pip install -r requirements.txt
 script:
   - flake8 data_manager_select_index_by_path/data_manager
-  - pytest --cov-report xml --cov data_manager_select_index_by_path/data_manager data_manager_select_index_by_path/data_manager
+  - yamllint $(git ls-files *.yml)
+  - planemo shed_lint -r --tools --xsd --urls --ensure_metadata
+  - >
+    pytest
+    --cov-report xml
+    --cov data_manager_select_index_by_path/data_manager
+    data_manager_select_index_by_path/data_manager/test_path_name_value_key_manager.py
   - python-codacy-coverage -r coverage.xml

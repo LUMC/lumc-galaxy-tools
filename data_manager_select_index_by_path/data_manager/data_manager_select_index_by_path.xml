@@ -1,38 +1,51 @@
-<tool id="data_manager_select_index_by_path" name="Select index by path manager" tool_type="manage_data" version="0.0.3">
+<tool id="data_manager_select_index_by_path" name="Select index by path manager" tool_type="manage_data" version="1.0.0a1" profile="18.09">
     <requirements>
         <!-- Away with python 2! -->
-        <requirement type="package" version="3">python</requirement>
+        <requirement type="package" version="3.5">python</requirement>
+        <requirement type="package" version="3.12">pyyaml</requirement>
     </requirements>
-    <description>path inputer</description>
-    <command detect_errors="exit_code" interpreter="python">
-        path_name_value_key_manager.py
+    <description>Link to indexes on the filesystem that have already been built</description>
+    <command detect_errors="exit_code"><![CDATA[
+        python $__tool_directory__/path_name_value_key_manager.py
         --value "${value}"
         --dbkey "${dbkey}"
         --name "${name}"
         --path "${path}"
-        --data_table_name "${data_table}"
+        --data_table_name "${data_table_set.data_table}"
         --json_output_file "${json_output_file}"
-    </command>
+        #if $data_table_set.data_table == "rnastar_index2"
+        --extra-columns '{"with-gtf": "$data_table_set.with_gtf"}'
+        #end if
+        ]]></command>
     <inputs>
         <param name="value" type="text" value="" label="value field for the entry.  Defaults to name if left blank." />
         <param name="dbkey" type="text" value="" label="dbkey field for the entry.  Defaults to value if left blank." />
         <param name="name" type="text" value="" label="name field for the entry. Defaults to the file name from path if left blank." />
         <param name="path" type="text" value="" label="path field for the entry" />
-        <param name="data_table" type="select" value="" label="data table for the index">
-          <option value='all_fasta'>all_fasta</option>
-          <option value='bowtie2_indexes'>bowtie2_indexes</option>
-          <option value='bowtie_indexes'>bowtie_indexes</option>
-          <option value='bowtie_indexes_color'>bowtie_indexes_color</option>
-          <option value='bwa_mem_indexes'>bwa_mem_indexes</option>
-          <option value='bwameth_indexes'>bwameth_indexes</option>
-          <option value='fasta_indexes'>fasta_indexes</option>
-          <option value='gatk_picard_indexes'>gatk_picard_indexes</option>
-          <option value='gene_transfer'>gene_transfer</option>
-          <option value='hisat2_indexes'>hisat2_indexes</option>
-          <option value='kallisto_indexes'>kallisto_indexes</option>
-          <option value='picard_indexes'>picard_indexes</option>
-          <option value='tophat2_indexes'>tophat2_indexes</option>
-        </param>
+        <conditional name="data_table_set">
+            <param name="data_table" type="select" value="" label="data table for the index">
+                <option value='all_fasta'>all_fasta</option>
+                <option value='bowtie2_indexes'>bowtie2_indexes</option>
+                <option value='bowtie_indexes'>bowtie_indexes</option>
+                <option value='bowtie_indexes_color'>bowtie_indexes_color</option>
+                <option value='bwa_mem_indexes'>bwa_mem_indexes</option>
+                <option value='bwameth_indexes'>bwameth_indexes</option>
+                <option value='fasta_indexes'>fasta_indexes</option>
+                <option value='gatk_picard_indexes'>gatk_picard_indexes</option>
+                <option value='gene_transfer'>gene_transfer</option>
+                <option value='hisat2_indexes'>hisat2_indexes</option>
+                <option value='kallisto_indexes'>kallisto_indexes</option>
+                <option value='picard_indexes'>picard_indexes</option>
+                <option value='tophat2_indexes'>tophat2_indexes</option>
+                <option value="rnastar_index2">rnastar_index2</option>
+            </param>
+            <when value="rnastar_index2">
+                <param name="with_gtf" type="select" value="" label="Index with embedded gtf?">
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </param>
+            </when>
+        </conditional>
     </inputs>
     <outputs>
         <data name="json_output_file" format="data_manager_json"/>

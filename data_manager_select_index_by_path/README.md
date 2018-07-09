@@ -1,4 +1,0 @@
-# data_manager_select_index_by_path
-
-This is a fork of the [data_manager_all_fasta_by_path](https://github.com/Christian-B/galaxy_shedtools/tree/master/all_fasta_by_path) data manager by [Cristian-B](https://github.com/Christian-B).
-The all_fasta_by_path data manager was forked on 2017-09-07 from Christian-B's [galaxy_shedtools](https://github.com/Christian-B/galaxy_shedtools) repository at commit d9f5343.
