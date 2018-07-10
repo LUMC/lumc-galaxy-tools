@@ -6,6 +6,17 @@ import json
 from pathlib import Path
 
 import yaml
+from schema import Schema, Optional
+
+
+def indexes_schema():
+    return \
+        Schema({'name': str,
+                Optional('prefix'): bool,
+                Optional('extensions'): [str],
+                Optional('prefix_strip_extension'): bool,
+                Optional('extra_columns'): [str],
+                Optional('folder'): [str]})
 
 
 def argument_parser():
@@ -105,7 +116,7 @@ class DataTable(object):
             raise ValueError(
                 "'{0}' not a supported table name".format(
                     self.data_table_name))
-        return index_properties
+        return indexes_schema().validate(index_properties)
 
     def check_index_file_presence(self):
         index_name = self.index_properties.get('name')

@@ -5,3 +5,4 @@ flake8
 pytest-cov
 codacy-coverage
 yamllint
+schema
