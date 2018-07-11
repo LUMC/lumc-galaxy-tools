@@ -10,13 +10,13 @@ from schema import Schema, Optional
 
 
 def indexes_schema():
-    return \
-        Schema({'name': str,
-                Optional('prefix'): bool,
-                Optional('extensions'): [str],
-                Optional('prefix_strip_extension'): bool,
-                Optional('extra_columns'): [str],
-                Optional('folder'): [str]})
+    return Schema(
+        {'name': str,
+         Optional('prefix'): bool,
+         Optional('extensions'): [str],
+         Optional('prefix_strip_extension'): bool,
+         Optional('extra_columns'): [str],
+         Optional('folder'): [str]})
 
 
 def argument_parser():
