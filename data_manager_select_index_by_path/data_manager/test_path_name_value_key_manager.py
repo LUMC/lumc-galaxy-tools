@@ -35,6 +35,12 @@ def temp_json_path():
         pass  # Do not fail if there is nothing to remove
 
 
+def test_validate_indexes_yaml():
+    indexes = yaml.safe_load(indexes_yml.open())
+    for index in indexes.values():
+        indexes_schema().validate(index)
+
+
 def test_schema():
     indexes_schema().validate(dict(name="bla"))
     indexes_schema().validate(dict(name="bla", prefix=True))
@@ -159,7 +165,6 @@ def test_data_table():
     assert (dt.value == "EboVir3")
     assert (dt.dbkey == "EboVir3")
     dm_json = json.loads(dt.data_manager_json)
-    print(dm_json)
     assert (dm_json == {"data_tables": {"bwa_mem_indexes": [
         {"name": "EboVir3",
          "value": "EboVir3",
