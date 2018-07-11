@@ -8,8 +8,11 @@ from pathlib import Path
 
 import pytest
 import yaml
+from schema import SchemaMissingKeyError, SchemaWrongKeyError, \
+    SchemaError
 
-from path_name_value_key_manager import DataTable, check_tab, main
+from path_name_value_key_manager import DataTable, check_tab, main, \
+    indexes_schema
 
 TEST_OUTPUT_DIR = tempfile.mkdtemp(".d",
                                    "tmp_data_manager_select_index_by_path")
@@ -30,6 +33,24 @@ def temp_json_path():
         os.remove(path)
     except FileNotFoundError:
         pass  # Do not fail if there is nothing to remove
+
+
+def test_schema():
+    indexes_schema().validate(dict(name="bla"))
+    indexes_schema().validate(dict(name="bla", prefix=True))
+    indexes_schema().validate(
+        dict(name="bla", extra_columns=["bla", "bladie"]))
+    indexes_schema().validate(dict(name="bla", extensions=[".foo", ".bar"],
+                                   prefix_strip_extension=True))
+
+
+def test_schema_fail():
+    with pytest.raises(SchemaMissingKeyError, match="name"):
+        indexes_schema().validate(dict(prefix=True))
+    with pytest.raises(SchemaWrongKeyError, match="is_prefix"):
+        indexes_schema().validate(dict(name="bla", is_prefix=True))
+    with pytest.raises(SchemaError, match="should be instance of 'bool'"):
+        indexes_schema().validate(dict(name="bla", prefix="true"))
 
 
 def test_application(temp_json_path):
