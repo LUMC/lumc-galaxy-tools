@@ -37,26 +37,27 @@ def temp_json_path():
 
 def test_validate_indexes_yaml():
     indexes = yaml.safe_load(indexes_yml.open())
-    for index in indexes.values():
-        indexes_schema().validate(index)
+    for key in indexes:
+        indexes_schema(key).validate(indexes)
 
 
 def test_schema():
-    indexes_schema().validate(dict(name="bla"))
-    indexes_schema().validate(dict(name="bla", prefix=True))
-    indexes_schema().validate(
-        dict(name="bla", extra_columns=["bla", "bladie"]))
-    indexes_schema().validate(dict(name="bla", extensions=[".foo", ".bar"],
-                                   prefix_strip_extension=True))
+    indexes_schema("bla").validate(dict(bla=dict(name="bla")))
+    indexes_schema("bla").validate(dict(bla=dict(name="bla", prefix=True)))
+    indexes_schema("bla").validate(
+        dict(bla=dict(name="bla", extra_columns=["bla", "bladie"])))
+    indexes_schema("bla").validate(
+        dict(bla=dict(name="bla", extensions=[".foo", ".bar"],
+                      prefix_strip_extension=True)))
 
 
 def test_schema_fail():
-    with pytest.raises(SchemaMissingKeyError, match="name"):
-        indexes_schema().validate(dict(prefix=True))
-    with pytest.raises(SchemaWrongKeyError, match="is_prefix"):
-        indexes_schema().validate(dict(name="bla", is_prefix=True))
+    with pytest.raises(SchemaError, match="name"):
+        indexes_schema("bla").validate(dict(bla=dict(prefix=True)))
+  #  with pytest.raises(SchemaWrongKeyError, match="is_prefix"):
+    indexes_schema("bla").validate(dict(bla=dict(name="bla", is_prefix="DSDSAD")))
     with pytest.raises(SchemaError, match="should be instance of 'bool'"):
-        indexes_schema().validate(dict(name="bla", prefix="true"))
+        indexes_schema("bla").validate(dict(bla=dict(name="bla", prefix="true")))
 
 
 def test_application(temp_json_path):
@@ -174,7 +175,7 @@ def test_data_table():
 
 
 def test_non_existing_table():
-    with pytest.raises(ValueError,
+    with pytest.raises(KeyError,
                        match="\'bla_indexes\' not a supported table name"):
         data_table_test(test_data / "bwa_mem_index/EboVir3.fa",
                         data_table_name="bla_indexes")
