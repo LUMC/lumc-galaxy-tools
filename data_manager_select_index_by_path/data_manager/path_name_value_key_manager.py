@@ -9,14 +9,14 @@ import yaml
 from schema import Schema, Optional
 
 
-def indexes_schema(table_name):
+def indexes_schema():
     return Schema(
-        {table_name: {'name': str,
+        {'name': str,
          Optional('prefix'): bool,
          Optional('extensions'): [str],
          Optional('prefix_strip_extension'): bool,
          Optional('extra_columns'): [str],
-         Optional('folder'): [str]}}, ignore_extra_keys=True)
+         Optional('folder'): [str]})
 
 
 def argument_parser():
@@ -111,12 +111,12 @@ class DataTable(object):
     def get_index_properties(self) -> dict:
         with self.indexes_properties_file.open('r') as properties_file:
             indexes = yaml.safe_load(properties_file)
-        if indexes.get(self.data_table_name) is None:
-            raise KeyError("'{0}' not a supported table name"
-                           .format(self.data_table_name))
-        return indexes_schema(self.data_table_name).validate(indexes)[
-            self.data_table_name]
-        # keyerror should never occur, since validation happens in schema)
+        index_properties = indexes.get(self.data_table_name)
+        if index_properties is None:
+            raise ValueError(
+                "'{0}' not a supported table name".format(
+                    self.data_table_name))
+        return indexes_schema().validate(index_properties)
 
     def check_index_file_presence(self):
         index_name = self.index_properties.get('name')
