@@ -3,6 +3,7 @@
         <!-- Away with python 2! -->
         <requirement type="package" version="3.5">python</requirement>
         <requirement type="package" version="3.12">pyyaml</requirement>
+        <requirement type="package" version="0.6.6">schema</requirement>
     </requirements>
     <description>Link to indexes on the filesystem that have already been built</description>
     <command detect_errors="exit_code"><![CDATA[

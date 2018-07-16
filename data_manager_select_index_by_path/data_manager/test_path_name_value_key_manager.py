@@ -8,8 +8,11 @@ from pathlib import Path
 
 import pytest
 import yaml
+from schema import SchemaMissingKeyError, SchemaWrongKeyError, \
+    SchemaError
 
-from path_name_value_key_manager import DataTable, check_tab, main
+from path_name_value_key_manager import DataTable, check_tab, main, \
+    indexes_schema
 
 TEST_OUTPUT_DIR = tempfile.mkdtemp(".d",
                                    "tmp_data_manager_select_index_by_path")
@@ -30,6 +33,30 @@ def temp_json_path():
         os.remove(path)
     except FileNotFoundError:
         pass  # Do not fail if there is nothing to remove
+
+
+def test_validate_indexes_yaml():
+    indexes = yaml.safe_load(indexes_yml.open())
+    for index in indexes.values():
+        indexes_schema().validate(index)
+
+
+def test_schema():
+    indexes_schema().validate(dict(name="bla"))
+    indexes_schema().validate(dict(name="bla", prefix=True))
+    indexes_schema().validate(
+        dict(name="bla", extra_columns=["bla", "bladie"]))
+    indexes_schema().validate(dict(name="bla", extensions=[".foo", ".bar"],
+                                   prefix_strip_extension=True))
+
+
+def test_schema_fail():
+    with pytest.raises(SchemaMissingKeyError, match="name"):
+        indexes_schema().validate(dict(prefix=True))
+    with pytest.raises(SchemaWrongKeyError, match="is_prefix"):
+        indexes_schema().validate(dict(name="bla", is_prefix=True))
+    with pytest.raises(SchemaError, match="should be instance of 'bool'"):
+        indexes_schema().validate(dict(name="bla", prefix="true"))
 
 
 def test_application(temp_json_path):
@@ -138,7 +165,6 @@ def test_data_table():
     assert (dt.value == "EboVir3")
     assert (dt.dbkey == "EboVir3")
     dm_json = json.loads(dt.data_manager_json)
-    print(dm_json)
     assert (dm_json == {"data_tables": {"bwa_mem_indexes": [
         {"name": "EboVir3",
          "value": "EboVir3",
