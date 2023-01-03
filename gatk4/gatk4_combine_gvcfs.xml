@@ -42,9 +42,13 @@
         ]]>
     </command>
     <inputs>
-        <expand macro="gzip_vcf_params"/>
+        <repeat name="inputs" title="Input GVCF File" min="2">
+            <param name="gvcf" type="data" format="bgzip_vcf"/>
+        </repeat>
         <expand macro="ref_sel"/>
-        <section name="optional" title="Interval options" expanded="true">
+        <expand macro="gzip_vcf_params"/>
+        <section name="optional" title="Interval options" expanded="false">
+
                 <expand macro="gatk_excl_ints"/>
                 <expand macro="gatk_ints"/>
 
