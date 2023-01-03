@@ -28,7 +28,7 @@
         gatk CombineGVCFs --QUIET $ref_flag
 
         #for $input in $inputs
-            --input=$input
+            --input=$input.gvcf
         #end for
 
         #if $optional.interval_merging_rule:
