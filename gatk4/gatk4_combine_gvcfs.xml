@@ -43,7 +43,7 @@
     </command>
     <inputs>
         <repeat name="inputs" title="Input GVCF File" min="2">
-            <param name="gvcf" type="data" format="bgzip_vcf"/>
+            <param name="gvcf" type="data" format="vcf_bgzip"/>
         </repeat>
         <expand macro="ref_sel"/>
         <expand macro="gzip_vcf_params"/>
@@ -64,12 +64,6 @@
     </inputs>
     <outputs>
         <expand macro="gzip_vcf_output_params"/>
-        <data format="tabular" name="assembly_region_out" label="${tool.name} on ${on_string}: Assembly region">
-            <filter>str(outputs['output_parameters']) == 'yes' and outputs['debug_assembly']</filter>
-        </data>
-        <data format="bam" name="bam_output" label="${tool.name} on ${on_string}: Debug BAM output">
-            <filter>str(outputs['output_parameters']) == 'yes' and outputs['debug_bam']</filter>
-        </data>
     </outputs>
     <help><![CDATA[CombineGVCFs is meant to be used for merging of GVCFs that
 will eventually be input into GenotypeGVCFs. One could use this tool to
