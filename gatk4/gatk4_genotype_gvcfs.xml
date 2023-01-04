@@ -1,5 +1,5 @@
 <tool id="gatk4_combine_gvcfs" name="GATK4 CombineGVCFs" version="@WRAPPER_VERSION@+galaxy1" profile="18.05">
-    <description>- Merges one or more HaplotypeCaller GVCF files into a single GVCF with appropriate annotations</description>
+    <description>- Perform joint genotyping on one or more samples pre-called with HaplotypeCaller</description>
     <macros>
         <import>macros.xml</import>
     </macros>
@@ -24,16 +24,12 @@
         #else
             #set ref_flag=''
         #end if
-        #for $i, $input in enumerate($inputs)
-            ln -s $input.gvcf input.${i}.g.vcf.gz &&
-            tabix -p vcf input.${i}.g.vcf.gz &&
-        #end for
 
-        gatk CombineGVCFs --QUIET $ref_flag
+        ln -s $gvcf input.g.vcf.gz &&
+        tabix -p vcf input.g.vcf.gz &&
 
-        #for $i, $input in enumerate($inputs)
-            --variant=input.${i}.g.vcf.gz
-        #end for
+        gatk GenotypeGVCFs --QUIET $ref_flag
+            --variant=input.g.vcf.gz
 
         #if $optional.interval_merging_rule:
             --interval-merging-rule="$optional.interval_merging_rule"
@@ -50,9 +46,7 @@
         ]]>
     </command>
     <inputs>
-        <repeat name="inputs" title="Input GVCF File" min="2">
-            <param name="gvcf" type="data" format="vcf_bgzip"/>
-        </repeat>
+        <param name="gvcf" label="GVCF file" type="data" format="vcf_bgzip"/>
         <expand macro="ref_sel"/>
         <expand macro="gzip_vcf_params"/>
         <section name="optional" title="Interval options" expanded="false">
