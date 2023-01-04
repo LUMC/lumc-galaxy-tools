@@ -24,11 +24,15 @@
         #else
             #set ref_flag=''
         #end if
+        #for $i, $input in enumerate($inputs)
+            ln -s $input.gvcf input.${i}.g.vcf.gz &&
+            tabix -p vcf input.${i}.g.vcf.gz &&
+        #end for
 
         gatk CombineGVCFs --QUIET $ref_flag
 
-        #for $input in $inputs
-            --input=$input.gvcf
+        #for $i, $input in enumerate($inputs)
+            --variant=input.${i}.g.vcf.gz
         #end for
 
         #if $optional.interval_merging_rule:
