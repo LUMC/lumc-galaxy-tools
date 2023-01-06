@@ -1,4 +1,4 @@
-<tool id="gatk4_combine_gvcfs" name="GATK4 CombineGVCFs" version="@WRAPPER_VERSION@+galaxy1" profile="18.05">
+<tool id="gatk4_genotype_gvcfs" name="GATK4 GenotypeGVCFs" version="@WRAPPER_VERSION@+galaxy1" profile="18.05">
     <description>- Perform joint genotyping on one or more samples pre-called with HaplotypeCaller</description>
     <macros>
         <import>macros.xml</import>
