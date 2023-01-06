@@ -33,12 +33,12 @@
         #if $advanced.disable_tool_default_annotations:
             --disable-tool-default-annotations
         #end if
-        #if $interval.interval_merging_rule:
-            --interval-merging-rule="$interval.interval_merging_rule"
+        #if $optional.interval_merging_rule:
+            --interval-merging-rule="$optional.interval_merging_rule"
         #end if
 
-        #if $interval.interval_set_rule:
-            --interval-set-rule="$interval.interval_set_rule"
+        #if $optional.interval_set_rule:
+            --interval-set-rule="$optional.interval_set_rule"
         #end if
 
         #include source=$gatk_excl_ints_chth#
@@ -51,7 +51,7 @@
         <param name="gvcf" label="GVCF file" type="data" format="vcf_bgzip"/>
         <expand macro="ref_sel"/>
         <expand macro="gzip_vcf_params"/>
-        <section name="interval" title="Interval options" expanded="false">
+        <section name="optional" title="Interval options" expanded="false">
 
                 <expand macro="gatk_excl_ints"/>
                 <expand macro="gatk_ints"/>
