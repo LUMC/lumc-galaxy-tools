@@ -1,4 +1,4 @@
-<tool id="gatk4_genotype_gvcfs" name="GATK4 GenotypeGVCFs" version="@WRAPPER_VERSION@+galaxy1" profile="18.05">
+<tool id="gatk4_genotype_gvcfs" name="GATK4 GenotypeGVCFs" version="@WRAPPER_VERSION@" profile="18.05">
     <description>- Perform joint genotyping on one or more samples pre-called with HaplotypeCaller</description>
     <macros>
         <import>macros.xml</import>
@@ -56,11 +56,11 @@
                 <expand macro="gatk_excl_ints"/>
                 <expand macro="gatk_ints"/>
 
-                <param name="interval_merging_rule" argument="--interval-merging-rule" type="select" optional="true" label="Interval Merging Rule" help="Interval merging rule for abutting intervals">
+                <param argument="--interval-merging-rule" type="select" optional="true" label="Interval Merging Rule" help="Interval merging rule for abutting intervals">
                     <option selected="true" value="ALL">All</option>
                     <option value="OVERLAPPING_ONLY">Overlapping only</option>
                 </param>
-                <param name="interval_set_rule" argument="--interval-set-rule" type="select" optional="true" label="Interval Set Rule" help="Set merging approach to use for combining interval inputs">
+                <param argument="--interval-set-rule" type="select" optional="true" label="Interval Set Rule" help="Set merging approach to use for combining interval inputs">
                     <option selected="true" value="UNION">Union</option>
                     <option value="INTERSECTION">Intersection</option>
                 </param>
