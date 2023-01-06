@@ -29,8 +29,7 @@
         <conditional name="reference_source">
             <param name="reference_source_selector" type="select" label="Choose the source for the reference list">
                 <option value="cached">Locally cached</option>
-                <option value="history">History</option>
-                <option value="no_ref" selected="true">Do not pass</option>
+                <option value="history" selected="true">History</option>
             </param>
             <when value="cached">
                 <param name="reference_sequence" type="select" label="Reference" help="Reference sequence file." >
