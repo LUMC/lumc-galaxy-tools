@@ -75,42 +75,51 @@
     <outputs>
         <expand macro="gzip_vcf_output_params"/>
     </outputs>
-    <help><![CDATA[CombineGVCFs is meant to be used for merging of GVCFs that
-will eventually be input into GenotypeGVCFs. One could use this tool to
-genotype multiple individual GVCFs instead of GenomicsDBImport; one would
-first use CombineGVCFs to combine them into a single GVCF and pass the
-results into GenotypeGVCFs. The main advantage of using CombineGVCFs over
-GenomicsDBImport is the ability to combine multiple intervals at once without
-building a GenomicsDB. CombineGVCFs is slower than GenomicsDBImport though,
-so it is recommended CombineGVCFs only be used when there are few samples to
-merge.
+    <help><![CDATA[Perform joint genotyping on one or more samples pre-called
+with HaplotypeCaller
+
+This tool is designed to perform joint genotyping on a single input, which may
+contain one or many samples. In any case, the input samples must possess
+genotype likelihoods produced by HaplotypeCaller with `-ERC GVCF` or
+`-ERC BP_RESOLUTION`.
+
+Input
+~~~~~
+
+The GATK4 GenotypeGVCFs tool can take only one input track. Options are 1) a
+single single-sample GVCF 2) a single multi-sample GVCF created by CombineGVCFs
+or 3) a GenomicsDB workspace created by GenomicsDBImport. A sample-level GVCF
+is produced by HaplotypeCaller with the `-ERC GVCF` setting.
+
+Output
+~~~~~~
+A final VCF in which all samples have been jointly genotyped.
 
 Usage example
 ~~~~~~~~~~~~~~
 ::
 
-    gatk CombineGVCFs \
-      -R reference.fasta \
-      --variant sample1.g.vcf.gz \
-      --variant sample2.g.vcf.gz \
-      -O cohort.g.vcf.gz
+    gatk --java-options "-Xmx4g" GenotypeGVCFs \
+        -R Homo_sapiens_assembly38.fasta \
+        -V input.g.vcf.gz \
+        -O output.vcf.gz
 
 
 Caveats
 ~~~~~~~
-Only GVCF files produced by HaplotypeCaller (or CombineGVCFs) can be used as
-input for this tool. Some other programs produce files that they call GVCFs but
-those lack some important information (accurate genotype likelihoods for every
-position) that GenotypeGVCFs requires for its operation.
 
-If the GVCF files contain allele specific annotations, add
-`-G Standard -G AS_Standard` to the command line.
++ Only GVCF files produced by HaplotypeCaller (or CombineGVCFs) can be used as
+  input for this tool. Some other programs produce files that they call GVCFs
+  but those lack some important information (accurate genotype likelihoods for
+  every position) that GenotypeGVCFs requires for its operation.
 
-Users generating large callsets (1000+ samples) may prefer GenomicsDBImport,
-which uses Intel's GenomicsDB and is capable of scaling to much larger sample
-sizes than CombineGVCFs. This tool provides a pure java reference
-implementation of the combine operation which is available on all
-architectures.
++ Cannot take multiple GVCF files in one command.
+
++ The amount of temporary disk storage required by GenomicsDBImport may exceed
+  what is available in the default location: `/tmp`. The command line argument
+  `--tmp-dir` can be used to specify an alternate temperary storage location
+  with sufficient space.
+
 ]]></help>
     <citations>
         <expand macro="citations"/>
