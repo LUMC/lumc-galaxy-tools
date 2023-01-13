@@ -35,7 +35,7 @@
             --variant=input.${i}.g.vcf.gz
         #end for
 
-        #if optional.interval_merging_rule:
+        #if $optional.interval_merging_rule:
             --interval-merging-rule="$optional.interval_merging_rule"
         #end if
 
